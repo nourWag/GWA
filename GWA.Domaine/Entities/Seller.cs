@@ -8,6 +8,7 @@ namespace GWA.Domaine.Entities
 {
    public  class Seller : User
     {
-        public String PersonnalDescription { get; set; }
+        public int Note { get; set; }
+        public virtual ICollection<User> BayersAbonnées { get; set; }
     }
 }

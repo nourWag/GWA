@@ -9,6 +9,7 @@ namespace GWA.Domaine.Entities
     public class Buyer : User
     {
         public String Type { get; set; }
-        public String PersonnalDescription { get; set; }
+       
+        public int NbrSignal { get; set; }
     }
 }

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GWA", "GWA\GWA.csproj", "{8EAEF5F3-C264-4C79-AF7D-9BEB840847E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GWA.Service", "GWA.Service\GWA.Service.csproj", "{C3FAB069-9815-4E53-9455-5A102D8BF993}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GWA.Domaine", "GWA.Domaine\GWA.Domaine.csproj", "{40E3D9C6-6106-4D2F-90C5-128BF9C46864}"
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8EAEF5F3-C264-4C79-AF7D-9BEB840847E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8EAEF5F3-C264-4C79-AF7D-9BEB840847E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8EAEF5F3-C264-4C79-AF7D-9BEB840847E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8EAEF5F3-C264-4C79-AF7D-9BEB840847E7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3FAB069-9815-4E53-9455-5A102D8BF993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3FAB069-9815-4E53-9455-5A102D8BF993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3FAB069-9815-4E53-9455-5A102D8BF993}.Release|Any CPU.ActiveCfg = Release|Any CPU

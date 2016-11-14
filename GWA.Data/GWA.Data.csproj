@@ -175,6 +175,27 @@
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Migrations\201611111929277_version1.cs" />
+    <Compile Include="Migrations\201611111929277_version1.Designer.cs">
+      <DependentUpon>201611111929277_version1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611122153515_versionBookkp.cs" />
+    <Compile Include="Migrations\201611122153515_versionBookkp.Designer.cs">
+      <DependentUpon>201611122153515_versionBookkp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611122213164_versionModifierAttrubutsuser.cs" />
+    <Compile Include="Migrations\201611122213164_versionModifierAttrubutsuser.Designer.cs">
+      <DependentUpon>201611122213164_versionModifierAttrubutsuser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611122250155_versionListSeller.cs" />
+    <Compile Include="Migrations\201611122250155_versionListSeller.Designer.cs">
+      <DependentUpon>201611122250155_versionListSeller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611130324472_versionDescpProduct.cs" />
+    <Compile Include="Migrations\201611130324472_versionDescpProduct.Designer.cs">
+      <DependentUpon>201611130324472_versionDescpProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +244,23 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611111929277_version1.resx">
+      <DependentUpon>201611111929277_version1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611122153515_versionBookkp.resx">
+      <DependentUpon>201611122153515_versionBookkp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611122213164_versionModifierAttrubutsuser.resx">
+      <DependentUpon>201611122213164_versionModifierAttrubutsuser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611122250155_versionListSeller.resx">
+      <DependentUpon>201611122250155_versionListSeller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611130324472_versionDescpProduct.resx">
+      <DependentUpon>201611130324472_versionDescpProduct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

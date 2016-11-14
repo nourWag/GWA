@@ -1,0 +1,100 @@
+﻿@model GWA.WEB1.Models.Product.ProductViewModel
+
+
+@*<div class="owl-item" style="width: 555px;">*@
+    <div class="clearfix">
+        <!--image-->
+        <a href="#" class="d_block photoframe relative shadow wrapper r_corners f_left m_right_20 animate_ftt f_mxs_none m_mxs_bottom_10 animate_vertical_finished">
+            <img class="tr_all_long_hover" src="/Content/images/blog_img_1.jpg" alt="">
+        </a>
+        <!--post content-->
+        <div class="mini_post_content">
+            <h4 class="m_bottom_5 animate_ftr animate_horizontal_finished"><a href="#" class="color_dark"><b>@Html.DisplayFor(model => model.Description)</b></a></h4>
+            <p class="f_size_medium m_bottom_10 animate_ftr animate_horizontal_finished">@Html.DisplayFor(model => model.CreationDate)</p>
+            <p class="m_bottom_10 animate_ftr animate_horizontal_finished">@Html.DisplayFor(model => model.CurrentPrice) DT </p>
+            <a class="tt_uppercase f_size_large animate_ftr animate_horizontal_finished" href="#">@Html.DisplayFor(model => model.Name)</a>
+        </div>
+    </div>
+@*</div>*@
+@*<div>
+    <h4>ProductViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.reference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.reference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@

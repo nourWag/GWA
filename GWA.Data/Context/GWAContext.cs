@@ -74,16 +74,16 @@ namespace GWA.Data.Context
       
        // DbSet<User> usersAuction { get; set; }
        public  DbSet<Product> products { get; set; }
-        DbSet<Auction> auctions { get; set; }
-        DbSet<Token> tokens { get; set; }
-        DbSet<Category> category { get; set; }
-        DbSet<Notification> notifications { get; set; }
-        DbSet<Bid> bids { get; set; }
-        DbSet<Payment> payments { get; set; }
-        DbSet<Session> sessions { get; set; }
-        DbSet<ShoppingCart> shoppingCarts { get; set; }
-        //DbSet<Subscription> subscription { get; set; }
-        DbSet<Command> commands { get; set; }
+        public DbSet<Auction> auctions { get; set; }
+        public DbSet<Token> tokens { get; set; }
+        public DbSet<Category> category { get; set; }
+        public DbSet<Notification> notifications { get; set; }
+        public DbSet<Bid> bids { get; set; }
+        public DbSet<Payment> payments { get; set; }
+        public DbSet<Session> sessions { get; set; }
+        public DbSet<ShoppingCart> shoppingCarts { get; set; }
+        public DbSet<Subscription> subscription { get; set; }
+        public DbSet<Command> commands { get; set; }
        //DbSet<ApplicationUser> ApplicationUsers { get; set; }
         
     }

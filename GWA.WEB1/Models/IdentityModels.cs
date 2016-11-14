@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IdentitySample.Models
 {
-   // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+    //You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     //public class ApplicationUser : IdentityUser
     //{
     //    public string RegisterEmail { get; set; }
@@ -31,22 +31,22 @@ namespace IdentitySample.Models
     //        return userIdentity;
     //    }
     //}
-    //[DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
-    //public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    //{
-    //    public ApplicationDbContext()
-    //        : base("GWADB", throwIfV1Schema: false)
-    //    {
-    //    }
+    ////[DbConfigurationType(typeof(MySql.Data.Entity.MySqlEFConfiguration))]
+    ////public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    ////{
+    ////    public ApplicationDbContext()
+    ////        : base("GWADB", throwIfV1Schema: false)
+    ////    {
+    ////    }
 
-    //    //static ApplicationDbContext()
-    //    //{
-    //    //    // Set the database intializer which is run once during application start
-    //    //    // This seeds the database with admin user credentials and admin role
-    //    //    Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
-    //    //}
+    ////    //static ApplicationDbContext()
+    ////    //{
+    ////    //    // Set the database intializer which is run once during application start
+    ////    //    // This seeds the database with admin user credentials and admin role
+    ////    //    Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+    ////    //}
 
-    //    public static ApplicationDbContext Create()
+    ////    public static ApplicationDbContext Create()
     //    {
     //        return new ApplicationDbContext();
     //    }

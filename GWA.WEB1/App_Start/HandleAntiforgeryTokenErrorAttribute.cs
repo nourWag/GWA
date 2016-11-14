@@ -11,9 +11,9 @@ namespace GWA.WEB1.App_Start
     {
         public override void OnException(ExceptionContext filterContext)
         {
-            filterContext.ExceptionHandled = true;
-            filterContext.Result = new RedirectToRouteResult(
-                new RouteValueDictionary(new { action = "Login", controller = "Account" }));
+        //    filterContext.ExceptionHandled = true;
+        //    filterContext.Result = new RedirectToRouteResult(
+        //        new RouteValueDictionary(new { action = "Login", controller = "Account" }));
         }
     }
 }

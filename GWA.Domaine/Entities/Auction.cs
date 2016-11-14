@@ -34,6 +34,12 @@ namespace GWA.Domaine.Entities
         public virtual Product product { get; set; }
         public Style Style { get; set; }
 
+        public virtual ICollection<Subscription> Subscription { get; set; }
+
+        public int valueAuctionToken { get; set; }
+
+        public bool status { get; set; }
+
     }
 
 

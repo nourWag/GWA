@@ -77,6 +77,7 @@
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\Auction.cs" />
     <Compile Include="Entities\Bid.cs" />
+    <Compile Include="Entities\Bookkeeper.cs" />
     <Compile Include="Entities\Buyer.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Command.cs" />

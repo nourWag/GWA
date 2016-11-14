@@ -30,5 +30,9 @@ namespace GWA.Domaine.Entities
         [ForeignKey("Category")]
         public int IdCategory { get; set; }
         public virtual Category Category { get; set; }
+
+        public string Description { get; set; }
+
+        public bool Favorie { get; set; }
     }
 }

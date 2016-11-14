@@ -38,6 +38,7 @@ namespace GWA.WEB1.Models.Product
 
 
         public User BestSeller { get; set; }
+        public string Description { get; set; }
 
     }
 }

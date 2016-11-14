@@ -20,6 +20,17 @@
     <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/owl.transitions.css")">
     <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/jquery.custom-scrollbar.css")">
     <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/style.css")">
+   
+  
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
     <!--font include-->
     <link href="@Url.Content("~/css/font-awesome.min.css")" rel="stylesheet">
     <script src="@Url.Content("~/Content/js/modernizr.js")"></script>
@@ -42,36 +53,45 @@
                         <div class="col-lg-4 col-md-4 col-sm-5 t_xs_align_c">
                             <ul class="d_inline_b horizontal_list clearfix f_size_small users_nav">
                               
-@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-        @Html.AntiForgeryToken()
 
-      
-            
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-           
-            <a href="javascript:document.getElementById('logoutForm').submit()" class="default_t_color"  style="padding-left: 1em">Checkout</a>
-            <a href="#" class="default_t_color" style="padding-left: 1em">My Account</a>
-    }
-}
-else
-{
+                               @using Microsoft.AspNet.Identity
+                            @if (Request.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <ul class="nav navbar-nav navbar-right" style="padding: 0 5px;">
+                                       
+                                        @Html.ActionLink("Home", "Index", "Home")
 
 
-        <li class="default_t_color">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li><a href="/Account/Login/loginLink" class="default_t_color" data-popup="#login_popup" style="padding-left: 1.8em" id="loginLink">Log in</a></li>
-        @*<li><a href="#" class="default_t_color">My Account</a></li>*@
-        <li><a href="orders_list.html" class="default_t_color" style="padding-left: 1.8em">List Orders</a></li>
-        @*<li><a href="checkout.html" class="default_t_color">Checkout</a></li>*@
+                                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                        
+                                       <a href="javascript:document.getElementById('logoutForm').submit()" style="padding: 0 5px;">Log off</a>
+                                       
+                                        @*@Html.ActionLink("My Account", "Profil", "Account")*@
+                                        <a href="/Account/Profil" id="c87bcc16-3515-4b77-940a-93da2e378644" style="padding: 0 5px;">My Account</a>
+                                    </ul>
+                                }
+                            }
+                            else
+                            {
+                                <ul class="nav navbar-nav navbar-right">
+                                    @*<a href="#" class="default_t_color" data-popup="#login_popup">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })Log in</a>*@
+                                   
+                                    @Html.ActionLink("Home", "Index", "Home")
 
-}
-                                @*@Html.Partial("_LoginPartial")*@
-                               
-                                 @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
 
+                                    <a href="" class="default_t_color" data-popup="#login_popup" id="loginLink" style="width:120px ;padding: 0 5px;" >Log in</a>
+
+
+                                    @*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
+                                    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                                    @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+                                </ul>
+                            }
+                              
                             </ul>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-2 t_align_c t_xs_align_c">
@@ -245,7 +265,11 @@ else
                                             @*<li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="@Url.Content("~/Content/contact.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Contact</b></a></li>*@
                                         </ul>
                                     </nav>
-                                    <button class="f_right search_button tr_all_hover f_xs_none d_xs_none">
+                                  
+                                   
+                                    
+                                     
+                                      <button class="f_right search_button tr_all_hover f_xs_none d_xs_none">
                                         <i class="fa fa-search"></i>
                                     </button>
                                     <!--search form-->
@@ -496,73 +520,407 @@ else
         </footer>
     </div>
     <!--social widgets-->
+    <style type="text/css">
+        
+
+.card {
+ 
+    background-color: rgba(214, 224, 226, 0.2);
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card .card-heading {
+    padding: 0 20px;
+    margin: 0;
+}
+
+.card .card-heading.simple {
+    font-size: 20px;
+    font-weight: 300;
+    color: #777;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.card .card-heading.image img {
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    margin-right: 15px;
+    vertical-align: top;
+    border: 0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.card .card-heading.image .card-heading-header {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card .card-heading.image .card-heading-header h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: #262626;
+}
+
+.card .card-heading.image .card-heading-header span {
+    font-size: 12px;
+    color: #999999;
+}
+
+.card .card-body {
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.card .card-media {
+    padding: 0 20px;
+    margin: 0 -14px;
+}
+
+.card .card-media img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card .card-actions {
+    min-height: 30px;
+    padding: 0 20px 20px 20px;
+    margin: 20px 0 0 0;
+}
+
+.card .card-comments {
+    padding: 20px;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.card .card-comments .comments-collapse-toggle {
+    padding: 0;
+    margin: 0 20px 12px 20px;
+}
+
+.card .card-comments .comments-collapse-toggle a,
+.card .card-comments .comments-collapse-toggle span {
+    padding-right: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-comments .media-heading {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card.people {
+    position: relative;
+    display: inline-block;
+    width: 170px;
+    height: 300px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.card.people:first-child {
+    margin-left: 0;
+}
+
+.card.people .card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 170px;
+    height: 150px;
+    background-color: #ffffff;
+}
+
+.card.people .card-top.green {
+    background-color: #53a93f;
+}
+
+.card.people .card-top.blue {
+    background-color: #427fed;
+}
+
+.card.people .card-info {
+    position: absolute;
+    top: 150px;
+    display: inline-block;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.people .card-info .title {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #404040;
+}
+
+.card.people .card-info .desc {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: rgba(214, 224, 226, 0.2);
+}
+
+.card.hovercard .cardheader {
+    background: url("http://lorempixel.com/850/280/nature/4/");
+    background-size: cover;
+    height: 135px;
+}
+
+.card.hovercard .avatar {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+}
+
+.card.hovercard .avatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+.card.hovercard .info {
+    padding: 4px 8px 10px;
+}
+
+.card.hovercard .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+}
+
+.card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+.btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+
+    </style>
+
     <ul class="social_widgets d_xs_none">
-        <!--facebook-->
+        <!--profil-->
+
+
         <li class="relative">
-            <button class="sw_button t_align_c facebook"><i class="fa fa-facebook"></i></button>
+            @*<a href="#" class="btn azm-social azm-size-48 azm-r-square azm-shadow-left azm-stack-exchange"><i class="fa fa-stack-exchange"></i></a>*@
+
+            <button style="font-size: 20px ;width: 40px;" class="sw_button t_align_c btn azm-social azm-size-48 azm-r-square azm-shadow-left azm-stack-exchange"><i class="fa fa-stack-exchange" style="line-height: 20px;"></i></button>
             <div class="sw_content">
-                <h3 class="color_dark m_bottom_20">Join Us on Facebook</h3>
-                <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fenvato&amp;width=235&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=438889712801266" style="border:none; overflow:hidden; width:235px; height:258px;"></iframe>
-            </div>
-        </li>
-        <!--twitter feed-->
-        <li class="relative">
-            <button class="sw_button t_align_c twitter"><i class="fa fa-twitter"></i></button>
-            <div class="sw_content">
-                <h3 class="color_dark m_bottom_20">Latest Tweets</h3>
-                <div class="twitterfeed m_bottom_25"></div>
-                <a role="button" class="button_type_4 d_inline_b r_corners tr_all_hover color_light tw_color" href="https://twitter.com/fanfbmltemplate">Follow on Twitter</a>
-            </div>
-        </li>
-        <!--contact form-->
-        <li class="relative">
-            <button class="sw_button t_align_c contact"><i class="fa fa-envelope-o"></i></button>
-            <div class="sw_content">
-                <h3 class="color_dark m_bottom_20">Contact Us</h3>
-                <p class="f_size_medium m_bottom_15">Lorem ipsum dolor sit amet, consectetuer adipis mauris</p>
-                <form id="contactform" class="mini">
-                    <input class="f_size_medium m_bottom_10 r_corners full_width" type="text" name="cf_name" placeholder="Your name">
-                    <input class="f_size_medium m_bottom_10 r_corners full_width" type="email" name="cf_email" placeholder="Email">
-                    <textarea class="f_size_medium r_corners full_width m_bottom_20" placeholder="Message" name="cf_message"></textarea>
-                    <button type="submit" class="button_type_4 r_corners mw_0 tr_all_hover color_dark bg_light_color_2">Send</button>
-                </form>
-            </div>
-        </li>
-        <!--contact info-->
-        <li class="relative">
-            <button class="sw_button t_align_c googlemap"><i class="fa fa-map-marker"></i></button>
-            <div class="sw_content">
-                <h3 class="color_dark m_bottom_20">Store Location</h3>
-                <ul class="c_info_list">
-                    <li class="m_bottom_10">
-                        <div class="clearfix m_bottom_15">
-                            <i class="fa fa-map-marker f_left color_dark"></i>
-                            <p class="contact_e">8901 Marmora Road,<br> Glasgow, D04 89GR.</p>
-                        </div>
-                        <iframe class="r_corners full_width" id="gmap_mini" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=ru&amp;geocode=&amp;q=Manhattan,+New+York,+NY,+United+States&amp;aq=0&amp;oq=monheten&amp;sll=37.0625,-95.677068&amp;sspn=65.430355,129.814453&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=%D0%9C%D0%B0%D0%BD%D1%85%D1%8D%D1%82%D1%82%D0%B5%D0%BD,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E+%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA&amp;ll=40.790278,-73.959722&amp;spn=0.015612,0.031693&amp;z=13&amp;output=embed"></iframe>
-                    </li>
-                    <li class="m_bottom_10">
-                        <div class="clearfix m_bottom_10">
-                            <i class="fa fa-phone f_left color_dark"></i>
-                            <p class="contact_e">800-559-65-80</p>
-                        </div>
-                    </li>
-                    <li class="m_bottom_10">
-                        <div class="clearfix m_bottom_10">
-                            <i class="fa fa-envelope f_left color_dark"></i>
-                            <a class="contact_e default_t_color" href="mailto:#">info@companyname.com</a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="clearfix">
-                            <i class="fa fa-clock-o f_left color_dark"></i>
-                            <p class="contact_e">Monday - Friday: 08.00-20.00 <br>Saturday: 09.00-15.00<br> Sunday: closed</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </li>
-    </ul>
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card hovercard">
+                                <div class="cardheader">
+                                </div>
+                                <div class="avatar">
+                                    <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                        <a target="_blank" href="http://scripteden.com/">GWA</a>
+                                    </div>
+
+
+                                </div>
+                               
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <a href="#" class="default_t_color" style="padding-left: 1em">@Html.ActionLink("Home", "index", "Home")Home</a>
+
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+
+
+                                        @Html.AntiForgeryToken()
+
+
+
+                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="default_t_color" style="padding-left: 1em">Checkout</a>
+                                        <a href="#" class="default_t_color" style="padding-left: 1em">@Html.ActionLink("My Account", "Profil", "Account", new { id = User.Identity.GetUserId() }, null)</a>
+                                    }
+                                }
+                                else
+                                {
+
+
+                                    <a href="#" class="default_t_color" style="padding-left: 1em">@Html.ActionLink("Home", "index", "Home")</a>
+
+            <li class="default_t_color">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            @*<li><a href="/Account/Login/loginLink" class="default_t_color" data-popup="#login_popup" style="padding-left: 1.8em" id="loginLink">Log in</a></li>*@
+            <li><a href="" class="default_t_color" data-popup="#login_popup" style="padding-left: 1.8em" id="loginLink">Log in</a></li>
+
+            @*<li><a href="#" class="default_t_color">My Account</a></li>*@
+                                    <li><a href="orders_list.html" class="default_t_color" style="padding-left: 1.8em">List Orders</a></li>
+                                    @*<li><a href="checkout.html" class="default_t_color">Checkout</a></li>*@
+
+                                }
+
+
+                                <div class="bottom">
+                                    <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" rel="publisher"
+                                       href="https://plus.google.com/+ahmshahnuralam">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                    <a class="btn btn-primary btn-sm" rel="publisher"
+                                       href="https://plus.google.com/shahnuralam">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
+                                        <i class="fa fa-behance"></i>
+                                    </a>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </li>
+
+
+
+                                <!--facebook-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c facebook"><i class="fa fa-facebook"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Join Us on Facebook</h3>
+                                        <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fenvato&amp;width=235&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=438889712801266" style="border:none; overflow:hidden; width:235px; height:258px;"></iframe>
+                                    </div>
+                                </li>
+                                <!--twitter feed-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c twitter"><i class="fa fa-twitter"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Latest Tweets</h3>
+                                        <div class="twitterfeed m_bottom_25"></div>
+                                        <a role="button" class="button_type_4 d_inline_b r_corners tr_all_hover color_light tw_color" href="https://twitter.com/fanfbmltemplate">Follow on Twitter</a>
+                                    </div>
+                                </li>
+                                <!--contact form-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c contact"><i class="fa fa-envelope-o"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Contact Us</h3>
+                                        <p class="f_size_medium m_bottom_15">Lorem ipsum dolor sit amet, consectetuer adipis mauris</p>
+                                        <form id="contactform" class="mini">
+                                            <input class="f_size_medium m_bottom_10 r_corners full_width" type="text" name="cf_name" placeholder="Your name">
+                                            <input class="f_size_medium m_bottom_10 r_corners full_width" type="email" name="cf_email" placeholder="Email">
+                                            <textarea class="f_size_medium r_corners full_width m_bottom_20" placeholder="Message" name="cf_message"></textarea>
+                                            <button type="submit" class="button_type_4 r_corners mw_0 tr_all_hover color_dark bg_light_color_2">Send</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                <!--contact info-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c googlemap"><i class="fa fa-map-marker"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Store Location</h3>
+                                        <ul class="c_info_list">
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_15">
+                                                    <i class="fa fa-map-marker f_left color_dark"></i>
+                                                    <p class="contact_e">8901 Marmora Road,<br> Glasgow, D04 89GR.</p>
+                                                </div>
+                                                <iframe class="r_corners full_width" id="gmap_mini" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=ru&amp;geocode=&amp;q=Manhattan,+New+York,+NY,+United+States&amp;aq=0&amp;oq=monheten&amp;sll=37.0625,-95.677068&amp;sspn=65.430355,129.814453&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=%D0%9C%D0%B0%D0%BD%D1%85%D1%8D%D1%82%D1%82%D0%B5%D0%BD,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E+%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA&amp;ll=40.790278,-73.959722&amp;spn=0.015612,0.031693&amp;z=13&amp;output=embed"></iframe>
+                                            </li>
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_10">
+                                                    <i class="fa fa-phone f_left color_dark"></i>
+                                                    <p class="contact_e">800-559-65-80</p>
+                                                </div>
+                                            </li>
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_10">
+                                                    <i class="fa fa-envelope f_left color_dark"></i>
+                                                    <a class="contact_e default_t_color" href="mailto:#">info@companyname.com</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="clearfix">
+                                                    <i class="fa fa-clock-o f_left color_dark"></i>
+                                                    <p class="contact_e">Monday - Friday: 08.00-20.00 <br>Saturday: 09.00-15.00<br> Sunday: closed</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
     <!--custom popup-->
     <div class="popup_wrap d_none" id="quick_view_product">
         <section class="popup r_corners shadow">
@@ -704,7 +1062,7 @@ else
                 </div>
             </div>
         </section>
-      
+
 
     </div>
     <!--login popup-->
@@ -713,301 +1071,126 @@ else
 
 
 
+
+
+
+
+    <button class="t_align_c r_corners type_2 tr_all_hover animate_ftl" id="go_to_top"><i class="fa fa-angle-up"></i></button>
+
+
     <div class="popup_wrap d_none" id="login_popup">
 
-        @model IdentitySample.Models.LoginViewModel
+       
 
 
-        @*<div class="row">
-            <div class="col-md-8">
-                <section id="loginForm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <h4>Use a local account to log in.</h4>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <div class="checkbox">
-                                    @Html.CheckBoxFor(m => m.RememberMe)
-                                    @Html.LabelFor(m => m.RememberMe)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Log in" class="btn btn-default" />
-                            </div>
-                        </div>
-                        <p>
-                            @Html.ActionLink("Register a new user?", "Register")
-                        </p>
-                        <p>
-                            @Html.ActionLink("Forget your password?", "ForgotPassword")
-                        </p>
-                        @* Enable this once you have account confirmation enabled for password reset functionality *@
-                        @*<p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
-                    @*}
-                </section>
-            </div>
-            <div class="col-md-4">
-                <section id="socialLoginForm"></section>
-            </div>*@
-        @*</div>*@
+        <section class="popup r_corners shadow" id="loginForm" style="margin-left: -195px; margin-top: -300.5px;">
+          
 
 
 
-        <section class="popup r_corners shadow" id="loginForm">
 
 
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-
-            {
-                @Html.AntiForgeryToken()
-                @*<h4>Use a local account to log in.</h4>
-                    <hr />*@
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+            <form action="/Account/Login" class="form-horizontal" method="post" role="form" novalidate="novalidate">
+               <input name="__RequestVerificationToken" type="hidden" value="mrsP3ZE1oZcYBweXIB8KmjRcCh6I5Y8EuT_bfPGMOFwj1xSHgpHotwCko7tT_jga3m0srfKGaxA46Xp_9kInSrK2_D8mCn-HXWtAvSFTmkU1">
+                 <h4>Use a local account to log in.</h4>
                 <button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
                 <h3 class="m_bottom_20 color_dark">Log In</h3>
-                <form>
-                    <ul>
+                <ul>
+                    <li class="m_bottom_15">
+                        <label for="UserName" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="UserName">UserName</label></label><br>
+                        <input class="form-control,r_corners full_width" data-val="true" data-val-required="The UserName field is required." did="UserName" name="UserName" type="text" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                    </li>
 
 
 
+                    <li class="m_bottom_25">
 
 
 
-                        <li class="m_bottom_15">
-                            <label for="username" class="m_bottom_5 d_inline_b">@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label,m_bottom_5 d_inline_b" }) </label><br>
-                            @*<input type="text" name="" id="username" class="r_corners full_width">*@
+                        <label for="password" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="Password">Password</label></label><br>
 
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control,r_corners full_width", @id = "username" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-
-
-                        </li>
+                        <input class="form-control,r_corners full_width" data-val="true" data-val-required="The Password field is required." id="password" name="Password" type="password">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </li>
+                    <link href="/Content/bootstrap.css" rel="stylesheet">
+                    <link href="/Content/site.css" rel="stylesheet">
 
 
 
-                        <li class="m_bottom_25">
+                    <div class="checkbox">
+                        <input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true">
+                        <input name="RememberMe" type="hidden" value="false">
+                        <label for="RememberMe">Remember me?</label>
+                    </div>
+                    <li class="clearfix m_bottom_30">
+                        <button  type="submit" value="Log in" class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In</button>
+                        <div class="f_right f_size_medium f_mxs_none">
+
+                            <p class="color_dark">
+                                <a href="/Home/ForgotPassword?class=color_dark">Forget your password?</a>
+                            </p>
+
+                            <p class="color_dark">
+                                <a href="/Home/ForgotPassword?class=color_dark">Forgot your password?</a>
+                            </p>
 
 
-
-                            <label for="password" class="m_bottom_5 d_inline_b">@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label,m_bottom_5 d_inline_b" })</label><br>
-                            @*<input type="password" name="" id="password" class="r_corners full_width">*@
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control,r_corners full_width", @id = "password" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                        </li>
-                        @Styles.Render("~/Content/css")
-
-
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
                         </div>
-
-
-                        @*<li class="m_bottom_15">*@
-
-
-
-                        @*<input type="checkbox" class="d_none" id="checkbox_10">*@
-                        @*@Html.CheckBoxFor(m => m.RememberMe, new { @class = "checkbox" })
-                            <label for="checkbox_10" >*@
-
-                        @*@Html.LabelFor(m => m.RememberMe, new { @class = "checkbox_10" })*@
-                        @*</label>*@
-                        @*</li>*@
-
-
-                        <li class="clearfix m_bottom_30">
-                            @*<div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Log in" class="btn btn-default" />
-                                </div>
-                            </div>*@
-                            <button type="submit" value="Log in" class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In</button>
-                            <div class="f_right f_size_medium f_mxs_none">
-
-                                <p class="color_dark">
-                                    @Html.ActionLink("Forget your password?", "ForgotPassword", new { @class = "color_dark" })
-                                </p>
-                                @* Enable this once you have account confirmation enabled for password reset functionality *@
-                                <p class="color_dark">
-                                    @Html.ActionLink("Forgot your password?", "ForgotPassword", new { @class = "color_dark" })
-                                </p>
-
-                                @*<a href="#" class="color_dark">Forgot your password?</a><br>
-                                    <a href="#" class="color_dark">Forgot your username?</a>*@
-                            </div>
-                        </li>
+                    </li>
+                </ul>
+            </form>
 
 
 
-                    </ul>
-                </form>
-                            <footer class="bg_light_color_1 t_mxs_align_c">
 
-                                <section id="socialLoginForm">
-                                    @Html.Partial("~/Views/Account/_ExternalLoginsListPartial.cshtml", new IdentitySample.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                                </section>
+            <footer class="bg_light_color_1 t_mxs_align_c">
+
+                <section id="socialLoginForm">
+
+                    <h4>Use another service to log in.</h4>
+                    <hr>
+                    <form action="/Account/ExternalLogin" method="post">
+                        <input name="__RequestVerificationToken" type="hidden" value="zcR2Jgt31XW-l0LfzodxBUD4IMELVIqVFXYnUzMjgxJtS97U_12APFRdmw1DEGsawXFPQbM9PR5lkD3HgpAWzi_MUbimWg2-cSNY4aEcOZI1">            <div id="socialLoginList">
+                            <p>
+                                <button type="submit" class="btn btn-default" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account">Facebook</button>
+                                <button type="submit" class="btn btn-default" id="Google" name="provider" value="Google" title="Log in using your Google account">Google</button>
+                            </p>
+                        </div>
+                    </form>
+
+                </section>
 
 
 
 
 
-                            </footer>
+            </footer>
+            <footer class="bg_light_color_1 t_mxs_align_c">
+                <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
+                <section class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">
+                    <a href="/Home/Register?style=color%3A%23FFFFFF%3B">Create an Account</a>
+                </section>
 
-
-                            <footer class="bg_light_color_1 t_mxs_align_c">
-                                <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
-                                <section class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">
-                                    @Html.ActionLink("Create an Account", "Register", new { @style = "color:#FFFFFF;" })
-                                </section>
-
-                            </footer>
-
-                                @*@Html.AntiForgeryToken()
-                                    <h4>Use a local account to log in.</h4>
-                                            <hr />
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-
-
-                                @*<div class="form-group">
-                                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>*@
-
-
-                                @*<div class="form-group">
-                                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>*@
-
-                                @*<div class="form-group">
-                                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>*@
-
-
-                                @*<div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <div class="checkbox">
-                                                @Html.CheckBoxFor(m => m.RememberMe)
-                                                @Html.LabelFor(m => m.RememberMe)
-                                            </div>
-                                        </div>
-                                    </div>*@
-
-
-
-                                @*<div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Log in" class="btn btn-default" />
-                                        </div>
-                                    </div>*@
-                                @*<p>
-                                        @Html.ActionLink("Register a new user?", "Register")
-                                    </p>
-                                    <p>
-                                        @Html.ActionLink("Forget your password?", "ForgotPassword")
-                                    </p>
-                                    @* Enable this once you have account confirmation enabled for password reset functionality *@
-                                @*<p>
-                                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                                    </p>*@
-            }
+            </footer>
 
 
         </section>
-
-        @*<button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
-                                        <h3 class="m_bottom_20 color_dark">Log In</h3>
-                                        <form>
-                                            <ul>
-
-                                                <li class="m_bottom_15">
-                                                    <label for="username" class="m_bottom_5 d_inline_b">Username</label><br>
-                                                    <input type="text" name="" id="username" class="r_corners full_width">
-                                                </li>
-
-
-
-                                                <li class="m_bottom_25">
-                                                    <label for="password" class="m_bottom_5 d_inline_b">Password</label><br>
-                                                    <input type="password" name="" id="password" class="r_corners full_width">
-                                                </li>
-                                                <li class="m_bottom_15">
-                                                    <input type="checkbox" class="d_none" id="checkbox_10"><label for="checkbox_10">Remember me</label>
-                                                </li>
-                                                <li class="clearfix m_bottom_30">
-                                                    <div class="col-md-4">
-                                                        <section id="socialLoginForm">
-                                                            @Html.Partial("~/Views/Account/_ExternalLoginsListPartial.cshtml", new IdentitySample.Models.ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                                                        </section>
-                                                    </div>
-                                                    <button class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In3logo</button>
-                                                    <div class="f_right f_size_medium f_mxs_none">
-                                                        <a href="#" class="color_dark">Forgot your password?</a><br>
-                                                        <a href="#" class="color_dark">Forgot your username?</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </form>
-                                        <footer class="bg_light_color_1 t_mxs_align_c">
-                                            <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
-                                            <a href="#" role="button" class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">Create an Account</a>
-                                        </footer>
-            </section>*@
-    </div>
-   
-
-    <button class="t_align_c r_corners type_2 tr_all_hover animate_ftl" id="go_to_top"><i class="fa fa-angle-up"></i></button>
-    <!--scripts include-->
-    <script src="@Url.Content("~/Content/js/jquery-2.1.0.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/retina.js")"></script>
-    <script src="@Url.Content("~/Content/js/jquery.themepunch.plugins.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/jquery.themepunch.revolution.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/waypoints.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/owl.carousel.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/jquery.tweet.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/jquery.custom-scrollbar.js")"></script>
-    <script src="@Url.Content("~/Content/js/scripts.js")"></script>
-    <script type="text/javascript" src="../../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5306f8f674bfda4c"></script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        </div>
+        <!--scripts include-->
+        <script src="@Url.Content("~/Content/js/jquery-2.1.0.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/retina.js")"></script>
+        <script src="@Url.Content("~/Content/js/jquery.themepunch.plugins.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/jquery.themepunch.revolution.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/waypoints.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/owl.carousel.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/jquery.tweet.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/jquery.custom-scrollbar.js")"></script>
+        <script src="@Url.Content("~/Content/js/scripts.js")"></script>
+        <script type="text/javascript" src="../../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5306f8f674bfda4c"></script>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 
 <!-- Mirrored from velikorodnov.com/html/flatastic/classic/index_layout_wide.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 01 Nov 2016 08:25:28 GMT -->

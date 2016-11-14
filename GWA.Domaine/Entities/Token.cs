@@ -10,5 +10,8 @@ namespace GWA.Domaine.Entities
     {
         public int Id { get; set; }
         public string Type { get; set; }
+
+        public virtual User User { get; set; }
+        public int valueToken { get; set; }
     }
 }

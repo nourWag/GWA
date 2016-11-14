@@ -1,45 +1,1188 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<!--[if IE 9 ]><html class="ie9" lang="en"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- Mirrored from velikorodnov.com/html/flatastic/classic/index_layout_wide.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 01 Nov 2016 08:24:58 GMT -->
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>GoWinAuction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--meta info-->
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="icon" type="image/ico" href=" @Url.Content("~/Content/images/fav.ico") ">
+    <!--stylesheet include-->
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/settings.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/owl.carousel.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/owl.transitions.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/jquery.custom-scrollbar.css")">
+    <link rel="stylesheet" type="text/css" media="all" href="@Url.Content("~/css/style.css")">
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <!--font include-->
+    <link href="@Url.Content("~/css/font-awesome.min.css")" rel="stylesheet">
+    <script src="@Url.Content("~/Content/js/modernizr.js")"></script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <!--boxed layout-->
+    <div class="wide_layout relative w_xs_auto">
+        <!--[if (lt IE 9) | IE 9]>
+            <div style="background:#fff;padding:8px 0 10px;">
+            <div class="container" style="width:1170px;"><div class="row wrapper"><div class="clearfix" style="padding:9px 0 0;float:left;width:83%;"><i class="fa fa-exclamation-triangle scheme_color f_left m_right_10" style="font-size:25px;color:#e74c3c;"></i><b style="color:#e74c3c;">Attention! This page may not display correctly.</b> <b>You are using an outdated version of Internet Explorer. For a faster, safer browsing experience.</b></div><div class="t_align_r" style="float:left;width:16%;"><a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode" class="button_type_4 r_corners bg_scheme_color color_light d_inline_b t_align_c" target="_blank" style="margin-bottom:2px;">Update Now!</a></div></div></div></div>
+        <![endif]-->
+        <!--markup header-->
+        <header role="banner" class="type_5">
+            <!--header top part-->
+            <section class="h_top_part">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-lg-4 col-md-4 col-sm-5 t_xs_align_c">
+                            <ul class="d_inline_b horizontal_list clearfix f_size_small users_nav">
 
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
+
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <ul class="nav navbar-nav navbar-right" style="padding: 0 5px;">
+
+                                            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" style="padding: 0 5px;">Log off</a>
+
+                                            @*@Html.ActionLink("My Account", "Profil", "Account")*@
+                                            <a href="/Seller/Profil" id="c87bcc16-3515-4b77-940a-93da2e378644" style="padding: 0 5px;">My Account</a>
+                                        </ul>
+                                    }
+                                }
+                                else
+                                {
+                                    <ul class="nav navbar-nav navbar-right">
+                                        @*<a href="#" class="default_t_color" data-popup="#login_popup">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })Log in</a>*@
+
+
+                                        <a href="" class="default_t_color" data-popup="#login_popup" id="loginLink" style="width:120px ;padding: 0 5px;">Log in</a>
+
+
+                                        @*@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
+                                        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                                        @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+                                    </ul>
+                                }
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-2 t_align_c t_xs_align_c">
+                            <p class="f_size_small">Call us toll free: <b class="color_dark">(123) 456-7890</b></p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-5 t_align_r t_xs_align_c">
+                            <ul class="horizontal_list clearfix d_inline_b t_align_l f_size_small site_settings type_2">
+                                <li class="container3d relative">
+                                    <a role="button" href="#" class="color_dark" id="lang_button"><img class="d_inline_middle m_right_10" src="@Url.Content("/Content/images/flag_en.jpg")" alt="">English</a>
+                                    <ul class="dropdown_list type_2 top_arrow color_light">
+                                        <li><a href="#" class="tr_delay_hover color_light"><img class="d_inline_middle" src="@Url.Content("/Content/images/flag_en.jpg")" alt="">English</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><img class="d_inline_middle" src="@Url.Content("/Content/images/flag_fr.jpg")" alt="">French</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><img class="d_inline_middle" src="@Url.Content("/Content/images/flag_g.jpg")" alt="">German</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><img class="d_inline_middle" src="@Url.Content("/Content/images/flag_i.jpg")" alt="">Italian</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><img class="d_inline_middle" src="@Url.Content("/Content/images/flag_s.jpg")" alt="">Spanish</a></li>
+                                    </ul>
+                                </li>
+                                <li class="m_left_20 relative container3d">
+                                    <a role="button" href="#" class="color_dark" id="currency_button"><span class="scheme_color">$</span> US Dollar</a>
+                                    <ul class="dropdown_list type_2 top_arrow color_light">
+                                        <li><a href="#" class="tr_delay_hover color_light"><span class="scheme_color">$</span> US Dollar</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><span class="scheme_color">&#8364;</span> Euro</a></li>
+                                        <li><a href="#" class="tr_delay_hover color_light"><span class="scheme_color">&#163;</span> Pound</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--header bottom part-->
+            <section class="h_bot_part">
+                <div class="menu_wrap">
+                    <div class="container">
+                        <div class="clearfix row">
+                            <div class="col-lg-2 t_md_align_c m_md_bottom_15">
+                                <a href="@Url.Content("~/Content/index-2.html")" class="logo d_md_inline_b">
+                                    <img src="@Url.Content("/Content/images/logo.png")" alt="">
+                                </a>
+                            </div>
+                            <div class="col-lg-10 clearfix t_sm_align_c">
+                                <div class="clearfix t_sm_align_l f_left f_sm_none relative s_form_wrap m_sm_bottom_15 p_xs_hr_0 m_xs_bottom_5">
+                                    <!--button for responsive menu-->
+                                    <button id="menu_button" class="r_corners centered_db d_none tr_all_hover d_xs_block m_xs_bottom_5">
+                                        <span class="centered_db r_corners"></span>
+                                        <span class="centered_db r_corners"></span>
+                                        <span class="centered_db r_corners"></span>
+                                    </button>
+                                    <!--main menu-->
+                                    <nav role="navigation" class="f_left f_xs_none d_xs_none m_right_35 m_md_right_30 m_sm_right_0">
+                                        <ul class="horizontal_list main_menu type_2 clearfix">
+                                            <li class="current relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/index-2.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Home</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index-2.html")">Home Variant 1</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index_layout_2.html")">Home Variant 2</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index_layout_wide.html")">Home Variant 3</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index_corporate.html")">Home Variant 4</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/index_layout_wide.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Videos</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index_layout_wide.html")">Revolution Slider</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index-2.html")">Camera Slider</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/index_layout_2.html")">Flex Slider</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/category_grid.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Categories</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none tr_all_hover clearfix r_corners w_xs_auto">
+                                                    <div class="f_left f_xs_none">
+                                                        <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Dresses</b>
+                                                        <ul class="sub_menu first">
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Evening Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Casual Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Party Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Maxi Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Midi Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Strapless Dresses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Day Dresses</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="f_left m_left_10 m_xs_left_0 f_xs_none">
+                                                        <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Accessories</b>
+                                                        <ul class="sub_menu">
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Bags and Purces</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Belts</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Scarves</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Gloves</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Jewellery</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Sunglasses</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Hair Accessories</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="f_left m_left_10 m_xs_left_0 f_xs_none">
+                                                        <b class="color_dark m_left_20 m_bottom_5 m_top_5 d_inline_b">Tops</b>
+                                                        <ul class="sub_menu">
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Evening Tops</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Long Sleeved</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Short Sleeved</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Sleeveless</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Tanks</a></li>
+                                                            <li><a class="color_dark tr_delay_hover" href="#">Tunics</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <img src="@Url.Content("Content/images/woman_image_1.jpg")" class="d_sm_none f_right m_bottom_10" alt="">
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/category_grid.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Services</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_two_columns.html")">Portfolio 2 Columns</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_three_columns.html")">Portfolio 3 Columns</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_four_columns.html")">Portfolio 4 Columns</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_masonry.html")">Masonry Portfolio</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_single_1.html")">Single Portfolio Post v1</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/portfolio_single_2.html")">Single Portfolio Post v2</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/category_grid.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Auctions</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/category_grid.html")">Grid View Category Page</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/category_list.html")">List View Category Page</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/category_no_products.html")">Category Page Without Products</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/product_page_sidebar.html")">Product Page With Sidebar</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/full_width_product_page.html")">Full Width Product Page</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/wishlist.html")">Wishlist</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/compare_products.html")">Compare Products</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/checkout.html")">Checkout</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/manufacturers.html")">Manufacturers</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/manufacturer_details.html")">Manufacturer Page</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/orders_list.html")">Orders List</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/order_details.html")">Order Details</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/blog.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Chat</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/blog.html")">Blog page</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/blog_post.html")">Single Blog Post page</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0">
+                                                <a href="@Url.Content("~/Content/blog.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Location</b></a>
+                                                <!--sub menu-->
+                                                <div class="sub_menu_wrap top_arrow d_xs_none type_2 tr_all_hover clearfix r_corners">
+                                                    <ul class="sub_menu">
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/features_shortcodes.html")">Shortcodes</a></li>
+                                                        <li><a class="color_dark tr_delay_hover" href="@Url.Content("~/Content/features_typography.html")">Typography</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            @*<li class="relative f_xs_none m_xs_bottom_5 m_left_10 m_xs_left_0"><a href="@Url.Content("~/Content/contact.html")" class="tr_delay_hover color_dark tt_uppercase r_corners"><b>Contact</b></a></li>*@
+                                        </ul>
+                                    </nav>
+
+
+
+
+                                    <button class="f_right search_button tr_all_hover f_xs_none d_xs_none">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    <!--search form-->
+                                    <div class="searchform_wrap type_2 bg_tr tf_xs_none tr_all_hover w_inherit">
+                                        <div class="container vc_child h_inherit relative w_inherit">
+                                            <form role="search" class="d_inline_middle full_width">
+                                                <input type="text" name="search" placeholder="Type text and hit enter" class="f_size_large p_hr_0">
+                                            </form>
+                                            <button class="close_search_form tr_all_hover d_xs_none color_dark">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="f_right horizontal_list d_sm_inline_b f_sm_none clearfix t_align_l site_settings">
+                                    <!--like-->
+                                    <li>
+                                        <a role="button" href="#" class="button_type_1 color_dark d_block bg_light_color_1 r_corners tr_delay_hover box_s_none"><i class="fa fa-heart-o f_size_ex_large"></i><span class="count circle t_align_c">12</span></a>
+                                    </li>
+                                    <li class="m_left_5">
+                                        <a role="button" href="#" class="button_type_1 color_dark d_block bg_light_color_1 r_corners tr_delay_hover box_s_none"><i class="fa fa-files-o f_size_ex_large"></i><span class="count circle t_align_c">3</span></a>
+                                    </li>
+                                    <!--shopping cart-->
+                                    <li class="m_left_5 relative container3d" id="shopping_button">
+                                        <a role="button" href="#" class="button_type_3 color_light bg_scheme_color d_block r_corners tr_delay_hover box_s_none">
+                                            <span class="d_inline_middle shop_icon">
+                                                <i class="fa fa-shopping-cart"></i>
+                                                <span class="count tr_delay_hover type_2 circle t_align_c">3</span>
+                                            </span>
+                                            <b>$355</b>
+                                        </a>
+                                        <div class="shopping_cart top_arrow tr_all_hover r_corners">
+                                            <div class="f_size_medium sc_header">Recently added item(s)</div>
+                                            <ul class="products_list">
+                                                <li>
+                                                    <div class="clearfix">
+                                                        <!--product image-->
+                                                        <img class="f_left m_right_10" src="@Url.Content("Content/images/shopping_c_img_1.jpg")" alt="">
+                                                        <!--product description-->
+                                                        <div class="f_left product_description">
+                                                            <a href="#" class="color_dark m_bottom_5 d_block">Cursus eleifend elit aenean auctor wisi et urna</a>
+                                                            <span class="f_size_medium">Product Code PS34</span>
+                                                        </div>
+                                                        <!--product price-->
+                                                        <div class="f_left f_size_medium">
+                                                            <div class="clearfix">
+                                                                1 x <b class="color_dark">$99.00</b>
+                                                            </div>
+                                                            <button class="close_product color_dark tr_hover"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="clearfix">
+                                                        <!--product image-->
+                                                        <img class="f_left m_right_10" src="@Url.Content("Content/images/shopping_c_img_2.jpg")" alt="">
+                                                        <!--product description-->
+                                                        <div class="f_left product_description">
+                                                            <a href="#" class="color_dark m_bottom_5 d_block">Cursus eleifend elit aenean auctor wisi et urna</a>
+                                                            <span class="f_size_medium">Product Code PS34</span>
+                                                        </div>
+                                                        <!--product price-->
+                                                        <div class="f_left f_size_medium">
+                                                            <div class="clearfix">
+                                                                1 x <b class="color_dark">$99.00</b>
+                                                            </div>
+                                                            <button class="close_product color_dark tr_hover"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="clearfix">
+                                                        <!--product image-->
+                                                        <img class="f_left m_right_10" src="@Url.Content("/Content/images/shopping_c_img_3.jpg")" alt="">
+                                                        <!--product description-->
+                                                        <div class="f_left product_description">
+                                                            <a href="#" class="color_dark m_bottom_5 d_block">Cursus eleifend elit aenean auctor wisi et urna</a>
+                                                            <span class="f_size_medium">Product Code PS34</span>
+                                                        </div>
+                                                        <!--product price-->
+                                                        <div class="f_left f_size_medium">
+                                                            <div class="clearfix">
+                                                                1 x <b class="color_dark">$99.00</b>
+                                                            </div>
+                                                            <button class="close_product color_dark tr_hover"><i class="fa fa-times"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <!--total price-->
+                                            <ul class="total_price bg_light_color_1 t_align_r color_dark">
+                                                <li class="m_bottom_10">Tax: <span class="f_size_large sc_price t_align_l d_inline_b m_left_15">$0.00</span></li>
+                                                <li class="m_bottom_10">Discount: <span class="f_size_large sc_price t_align_l d_inline_b m_left_15">$37.00</span></li>
+                                                <li>Total: <b class="f_size_large bold scheme_color sc_price t_align_l d_inline_b m_left_15">$999.00</b></li>
+                                            </ul>
+                                            <div class="sc_footer t_align_c">
+                                                <a href="#" role="button" class="button_type_4 d_inline_middle bg_light_color_2 r_corners color_dark t_align_c tr_all_hover m_mxs_bottom_5">View Cart</a>
+                                                <a href="#" role="button" class="button_type_4 bg_scheme_color d_inline_middle r_corners tr_all_hover color_light">Checkout</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="divider_type_6">
+                </div>
+            </section>
+        </header>
+        <!--slider-->
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <!--markup footer-->
+        <footer id="footer">
+            <div class="footer_top_part p_vr_0">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                            <h3 class="color_light_2 m_bottom_20">About</h3>
+                            <p class="m_bottom_15">Ut pharetra augue nec augue. Nam elit agna, endrerit sit amet, tincidunt ac, viverra sed, nulla. Donec porta diam eu massa. Quisque diam lorem, interdum vitae, dapibus ac, scelerisque.</p>
+                            <a href="#" class="color_light">Read More <i class="fa fa-angle-right m_left_5"></i></a>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                            <h3 class="color_light_2 m_bottom_20">The Service</h3>
+                            <ul class="vertical_list">
+                                <li><a class="color_light tr_delay_hover" href="#">My account<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Order history<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Wishlist<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Categories<i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 m_xs_bottom_30 m_bottom_40">
+                            <h3 class="color_light_2 m_bottom_20">Information</h3>
+                            <ul class="vertical_list">
+                                <li><a class="color_light tr_delay_hover" href="#">About us<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Delivery<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Privacy policy<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Terms &amp; condition<i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 m_bottom_40 m_xs_bottom_30">
+                            <h3 class="color_light_2 m_bottom_20">Catalog</h3>
+                            <ul class="vertical_list">
+                                <li><a class="color_light tr_delay_hover" href="#">New collection<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Best sellers<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Specials<i class="fa fa-angle-right"></i></a></li>
+                                <li><a class="color_light tr_delay_hover" href="#">Manufacturers<i class="fa fa-angle-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr class="divider_type_4 m_bottom_25">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 m_xs_bottom_10">
+                            <!--social icons-->
+                            <ul class="clearfix horizontal_list social_icons">
+                                @*<li class="facebook m_bottom_5 relative">
+                                        <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Facebook</span>
+                                        <a href="#" class="r_corners t_align_c tr_delay_hover f_size_ex_large">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>*@
+                                <li class="twitter m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Twitter</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="google_plus m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Google Plus</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </li>
+                                <li class="rss m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Rss</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-rss"></i>
+                                    </a>
+                                </li>
+                                <li class="pinterest m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Pinterest</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-pinterest"></i>
+                                    </a>
+                                </li>
+                                <li class="instagram m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Instagram</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-instagram"></i>
+                                    </a>
+                                </li>
+                                <li class="linkedin m_bottom_5 m_left_5 m_sm_left_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">LinkedIn</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-linkedin"></i>
+                                    </a>
+                                </li>
+                                <li class="vimeo m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Vimeo</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-vimeo-square"></i>
+                                    </a>
+                                </li>
+                                <li class="youtube m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Youtube</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-youtube-play"></i>
+                                    </a>
+                                </li>
+                                <li class="flickr m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Flickr</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-flickr"></i>
+                                    </a>
+                                </li>
+                                <li class="envelope m_left_5 m_bottom_5 relative">
+                                    <span class="tooltip tr_all_hover r_corners color_dark f_size_small">Contact Us</span>
+                                    <a href="#" class="r_corners f_size_ex_large t_align_c tr_delay_hover">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 m_bottom_20 m_xs_bottom_30">
+                            <h3 class="color_light_2 d_inline_middle m_md_bottom_15 d_xs_block">Newsletter</h3>
+                            <form id="newsletter" class="d_inline_middle m_left_5 subscribe_form_2 m_md_left_0">
+                                <input type="email" placeholder="Your email address" class="r_corners f_size_medium w_sm_auto m_mxs_bottom_15" name="newsletter-email">
+                                <button type="submit" class="button_type_8 r_corners bg_scheme_color color_light tr_all_hover m_left_5 m_mxs_left_0">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--copyright part-->
+            <div class="footer_bottom_part">
+                <div class="container clearfix t_mxs_align_c">
+                    <p class="f_left f_mxs_none m_mxs_bottom_10">&copy; 2014 <span class="color_light">Flatastic</span>. All Rights Reserved.</p>
+                    <ul class="f_right horizontal_list clearfix f_mxs_none d_mxs_inline_b">
+                        <li><img src="@Url.Content("~/Content/images/payment_img_1.png")" alt=""></li>
+                        <li class="m_left_5"><img src="@Url.Content("~/Content/images/payment_img_2.png")" alt=""></li>
+                        <li class="m_left_5"><img src="@Url.Content("~/Content/images/payment_img_3.png")" alt=""></li>
+                        <li class="m_left_5"><img src="@Url.Content("~/Content/images/payment_img_4.png")" alt=""></li>
+                        <li class="m_left_5"><img src="@Url.Content("~/Content/images/payment_img_5.png")" alt=""></li>
+                    </ul>
+                </div>
+            </div>
         </footer>
     </div>
+    <!--social widgets-->
+    <style type="text/css">
+        .card {
+            background-color: rgba(214, 224, 226, 0.2);
+            border-top-width: 0;
+            border-bottom-width: 2px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+            .card .card-heading {
+                padding: 0 20px;
+                margin: 0;
+            }
+
+                .card .card-heading.simple {
+                    font-size: 20px;
+                    font-weight: 300;
+                    color: #777;
+                    border-bottom: 1px solid #e5e5e5;
+                }
+
+                .card .card-heading.image img {
+                    display: inline-block;
+                    width: 46px;
+                    height: 46px;
+                    margin-right: 15px;
+                    vertical-align: top;
+                    border: 0;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+                }
+
+                .card .card-heading.image .card-heading-header {
+                    display: inline-block;
+                    vertical-align: top;
+                }
+
+                    .card .card-heading.image .card-heading-header h3 {
+                        margin: 0;
+                        font-size: 14px;
+                        line-height: 16px;
+                        color: #262626;
+                    }
+
+                    .card .card-heading.image .card-heading-header span {
+                        font-size: 12px;
+                        color: #999999;
+                    }
+
+            .card .card-body {
+                padding: 0 20px;
+                margin-top: 20px;
+            }
+
+            .card .card-media {
+                padding: 0 20px;
+                margin: 0 -14px;
+            }
+
+                .card .card-media img {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+
+            .card .card-actions {
+                min-height: 30px;
+                padding: 0 20px 20px 20px;
+                margin: 20px 0 0 0;
+            }
+
+            .card .card-comments {
+                padding: 20px;
+                margin: 0;
+                background-color: #f8f8f8;
+            }
+
+                .card .card-comments .comments-collapse-toggle {
+                    padding: 0;
+                    margin: 0 20px 12px 20px;
+                }
+
+                    .card .card-comments .comments-collapse-toggle a,
+                    .card .card-comments .comments-collapse-toggle span {
+                        padding-right: 5px;
+                        overflow: hidden;
+                        font-size: 12px;
+                        color: #999;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+        .card-comments .media-heading {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card.people {
+            position: relative;
+            display: inline-block;
+            width: 170px;
+            height: 300px;
+            padding-top: 0;
+            margin-left: 20px;
+            overflow: hidden;
+            vertical-align: top;
+        }
+
+            .card.people:first-child {
+                margin-left: 0;
+            }
+
+            .card.people .card-top {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: inline-block;
+                width: 170px;
+                height: 150px;
+                background-color: #ffffff;
+            }
+
+                .card.people .card-top.green {
+                    background-color: #53a93f;
+                }
+
+                .card.people .card-top.blue {
+                    background-color: #427fed;
+                }
+
+            .card.people .card-info {
+                position: absolute;
+                top: 150px;
+                display: inline-block;
+                width: 100%;
+                height: 101px;
+                overflow: hidden;
+                background: #ffffff;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+                .card.people .card-info .title {
+                    display: block;
+                    margin: 8px 14px 0 14px;
+                    overflow: hidden;
+                    font-size: 16px;
+                    font-weight: bold;
+                    line-height: 18px;
+                    color: #404040;
+                }
+
+                .card.people .card-info .desc {
+                    display: block;
+                    margin: 8px 14px 0 14px;
+                    overflow: hidden;
+                    font-size: 12px;
+                    line-height: 16px;
+                    color: #737373;
+                    text-overflow: ellipsis;
+                }
+
+            .card.people .card-bottom {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                display: inline-block;
+                width: 100%;
+                padding: 10px 20px;
+                line-height: 29px;
+                text-align: center;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+        .card.hovercard {
+            position: relative;
+            padding-top: 0;
+            overflow: hidden;
+            text-align: center;
+            background-color: rgba(214, 224, 226, 0.2);
+        }
+
+            .card.hovercard .cardheader {
+                background: url("http://lorempixel.com/850/280/nature/4/");
+                background-size: cover;
+                height: 135px;
+            }
+
+            .card.hovercard .avatar {
+                position: relative;
+                top: -50px;
+                margin-bottom: -50px;
+            }
+
+                .card.hovercard .avatar img {
+                    width: 100px;
+                    height: 100px;
+                    max-width: 100px;
+                    max-height: 100px;
+                    -webkit-border-radius: 50%;
+                    -moz-border-radius: 50%;
+                    border-radius: 50%;
+                    border: 5px solid rgba(255,255,255,0.5);
+                }
+
+            .card.hovercard .info {
+                padding: 4px 8px 10px;
+            }
+
+                .card.hovercard .info .title {
+                    margin-bottom: 4px;
+                    font-size: 24px;
+                    line-height: 1;
+                    color: #262626;
+                    vertical-align: middle;
+                }
+
+                .card.hovercard .info .desc {
+                    overflow: hidden;
+                    font-size: 12px;
+                    line-height: 20px;
+                    color: #737373;
+                    text-overflow: ellipsis;
+                }
+
+            .card.hovercard .bottom {
+                padding: 0 20px;
+                margin-bottom: 17px;
+            }
+
+        .btn {
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            line-height: 18px;
+        }
+    </style>
+
+    <ul class="social_widgets d_xs_none">
+        <!--profil-->
+
+
+        <li class="relative">
+            @*<a href="#" class="btn azm-social azm-size-48 azm-r-square azm-shadow-left azm-stack-exchange"><i class="fa fa-stack-exchange"></i></a>*@
+
+            <button style="font-size: 20px ;width: 40px;" class="sw_button t_align_c btn azm-social azm-size-48 azm-r-square azm-shadow-left azm-stack-exchange"><i class="fa fa-stack-exchange" style="line-height: 20px;"></i></button>
+            <div class="sw_content">
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="card hovercard">
+                                <div class="cardheader">
+                                </div>
+                                <div class="avatar">
+                                    <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                                </div>
+                                <div class="info">
+                                    <div class="title">
+                                        <a target="_blank" href="http://scripteden.com/">GWA</a>
+                                    </div>
+
+
+                                </div>
+                                @using Microsoft.AspNet.Identity
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+
+
+                                        @Html.AntiForgeryToken()
+
+
+
+                                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                                        <a href="javascript:document.getElementById('logoutForm').submit()" class="default_t_color" style="padding-left: 1em">Checkout</a>
+                                        <a href="#" class="default_t_color" style="padding-left: 1em">@Html.ActionLink("My Account", "Profil", "Account", new { id = User.Identity.GetUserId() }, null)</a>
+                                    }
+                                }
+                                else
+                                {
+
+
+
+            <li class="default_t_color">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            @*<li><a href="/Account/Login/loginLink" class="default_t_color" data-popup="#login_popup" style="padding-left: 1.8em" id="loginLink">Log in</a></li>*@
+                                    <li><a href="" class="default_t_color" data-popup="#login_popup" style="padding-left: 1.8em" id="loginLink">Log in</a></li>
+
+                                    @*<li><a href="#" class="default_t_color">My Account</a></li>*@
+                                    <li><a href="orders_list.html" class="default_t_color" style="padding-left: 1.8em">List Orders</a></li>
+                                    @*<li><a href="checkout.html" class="default_t_color">Checkout</a></li>*@
+
+                                }
+
+
+                                <div class="bottom">
+                                    <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" rel="publisher"
+                                       href="https://plus.google.com/+ahmshahnuralam">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                    <a class="btn btn-primary btn-sm" rel="publisher"
+                                       href="https://plus.google.com/shahnuralam">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                    <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
+                                        <i class="fa fa-behance"></i>
+                                    </a>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                </li>
+
+
+
+                                <!--facebook-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c facebook"><i class="fa fa-facebook"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Join Us on Facebook</h3>
+                                        <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fenvato&amp;width=235&amp;height=258&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=false&amp;appId=438889712801266" style="border:none; overflow:hidden; width:235px; height:258px;"></iframe>
+                                    </div>
+                                </li>
+                                <!--twitter feed-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c twitter"><i class="fa fa-twitter"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Latest Tweets</h3>
+                                        <div class="twitterfeed m_bottom_25"></div>
+                                        <a role="button" class="button_type_4 d_inline_b r_corners tr_all_hover color_light tw_color" href="https://twitter.com/fanfbmltemplate">Follow on Twitter</a>
+                                    </div>
+                                </li>
+                                <!--contact form-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c contact"><i class="fa fa-envelope-o"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Contact Us</h3>
+                                        <p class="f_size_medium m_bottom_15">Lorem ipsum dolor sit amet, consectetuer adipis mauris</p>
+                                        <form id="contactform" class="mini">
+                                            <input class="f_size_medium m_bottom_10 r_corners full_width" type="text" name="cf_name" placeholder="Your name">
+                                            <input class="f_size_medium m_bottom_10 r_corners full_width" type="email" name="cf_email" placeholder="Email">
+                                            <textarea class="f_size_medium r_corners full_width m_bottom_20" placeholder="Message" name="cf_message"></textarea>
+                                            <button type="submit" class="button_type_4 r_corners mw_0 tr_all_hover color_dark bg_light_color_2">Send</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                <!--contact info-->
+                                <li class="relative">
+                                    <button class="sw_button t_align_c googlemap"><i class="fa fa-map-marker"></i></button>
+                                    <div class="sw_content">
+                                        <h3 class="color_dark m_bottom_20">Store Location</h3>
+                                        <ul class="c_info_list">
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_15">
+                                                    <i class="fa fa-map-marker f_left color_dark"></i>
+                                                    <p class="contact_e">8901 Marmora Road,<br> Glasgow, D04 89GR.</p>
+                                                </div>
+                                                <iframe class="r_corners full_width" id="gmap_mini" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=ru&amp;geocode=&amp;q=Manhattan,+New+York,+NY,+United+States&amp;aq=0&amp;oq=monheten&amp;sll=37.0625,-95.677068&amp;sspn=65.430355,129.814453&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=%D0%9C%D0%B0%D0%BD%D1%85%D1%8D%D1%82%D1%82%D0%B5%D0%BD,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E+%D0%99%D0%BE%D1%80%D0%BA,+%D0%9D%D1%8C%D1%8E-%D0%99%D0%BE%D1%80%D0%BA&amp;ll=40.790278,-73.959722&amp;spn=0.015612,0.031693&amp;z=13&amp;output=embed"></iframe>
+                                            </li>
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_10">
+                                                    <i class="fa fa-phone f_left color_dark"></i>
+                                                    <p class="contact_e">800-559-65-80</p>
+                                                </div>
+                                            </li>
+                                            <li class="m_bottom_10">
+                                                <div class="clearfix m_bottom_10">
+                                                    <i class="fa fa-envelope f_left color_dark"></i>
+                                                    <a class="contact_e default_t_color" href="mailto:#">info@companyname.com</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="clearfix">
+                                                    <i class="fa fa-clock-o f_left color_dark"></i>
+                                                    <p class="contact_e">Monday - Friday: 08.00-20.00 <br>Saturday: 09.00-15.00<br> Sunday: closed</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--custom popup-->
+                            <div class="popup_wrap d_none" id="quick_view_product">
+                                <section class="popup r_corners shadow">
+                                    <button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
+                                    <div class="clearfix">
+                                        <div class="custom_scrollbar">
+                                            <!--left popup column-->
+                                            <div class="f_left half_column">
+                                                <div class="relative d_inline_b m_bottom_10 qv_preview">
+                                                    <span class="hot_stripe"><img src="@Url.Content("~/Content/images/sale_product.png")" alt=""></span>
+                                                    <img src="@Url.Content("~/Content/images/quick_view_img_1.jpg")" class="tr_all_hover" alt="">
+                                                </div>
+                                                <!--carousel-->
+                                                <div class="relative qv_carousel_wrap m_bottom_20">
+                                                    <button class="button_type_11 t_align_c f_size_ex_large bg_cs_hover r_corners d_inline_middle bg_tr tr_all_hover qv_btn_prev">
+                                                        <i class="fa fa-angle-left "></i>
+                                                    </button>
+                                                    <ul class="qv_carousel d_inline_middle">
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_1.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_4.jpg")" alt=""></li>
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_2.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_5.jpg")" alt=""></li>
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_3.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_6.jpg")" alt=""></li>
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_1.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_4.jpg")" alt=""></li>
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_2.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_5.jpg")" alt=""></li>
+                                                        <li data-src="@Url.Content("~/Content/images/quick_view_img_3.jpg")"><img src="@Url.Content("~/Content/images/quick_view_img_6.jpg")" alt=""></li>
+                                                    </ul>
+                                                    <button class="button_type_11 t_align_c f_size_ex_large bg_cs_hover r_corners d_inline_middle bg_tr tr_all_hover qv_btn_next">
+                                                        <i class="fa fa-angle-right "></i>
+                                                    </button>
+                                                </div>
+                                                <div class="d_inline_middle">Share this:</div>
+                                                <div class="d_inline_middle m_left_5">
+                                                    <!-- AddThis Button BEGIN -->
+                                                    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+                                                        <a class="addthis_button_preferred_1"></a>
+                                                        <a class="addthis_button_preferred_2"></a>
+                                                        <a class="addthis_button_preferred_3"></a>
+                                                        <a class="addthis_button_preferred_4"></a>
+                                                        <a class="addthis_button_compact"></a>
+                                                        <a class="addthis_counter addthis_bubble_style"></a>
+                                                    </div>
+                                                    <!-- AddThis Button END -->
+                                                </div>
+                                            </div>
+                                            <!--right popup column-->
+                                            <div class="f_right half_column">
+                                                <!--description-->
+                                                <h2 class="m_bottom_10"><a href="#" class="color_dark fw_medium">Eget elementum vel</a></h2>
+                                                <div class="m_bottom_10">
+                                                    <!--rating-->
+                                                    <ul class="horizontal_list d_inline_middle type_2 clearfix rating_list tr_all_hover">
+                                                        <li class="active">
+                                                            <i class="fa fa-star-o empty tr_all_hover"></i>
+                                                            <i class="fa fa-star active tr_all_hover"></i>
+                                                        </li>
+                                                        <li class="active">
+                                                            <i class="fa fa-star-o empty tr_all_hover"></i>
+                                                            <i class="fa fa-star active tr_all_hover"></i>
+                                                        </li>
+                                                        <li class="active">
+                                                            <i class="fa fa-star-o empty tr_all_hover"></i>
+                                                            <i class="fa fa-star active tr_all_hover"></i>
+                                                        </li>
+                                                        <li class="active">
+                                                            <i class="fa fa-star-o empty tr_all_hover"></i>
+                                                            <i class="fa fa-star active tr_all_hover"></i>
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-star-o empty tr_all_hover"></i>
+                                                            <i class="fa fa-star active tr_all_hover"></i>
+                                                        </li>
+                                                    </ul>
+                                                    <a href="#" class="d_inline_middle default_t_color f_size_small m_left_5">1 Review(s) </a>
+                                                </div>
+                                                <hr class="m_bottom_10 divider_type_3">
+                                                <table class="description_table m_bottom_10">
+                                                    <tr>
+                                                        <td>Manufacturer:</td>
+                                                        <td><a href="#" class="color_dark">Chanel</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Availability:</td>
+                                                        <td><span class="color_green">in stock</span> 20 item(s)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Product Code:</td>
+                                                        <td>PS06</td>
+                                                    </tr>
+                                                </table>
+                                                <h5 class="fw_medium m_bottom_10">Product Dimensions and Weight</h5>
+                                                <table class="description_table m_bottom_5">
+                                                    <tr>
+                                                        <td>Product Length:</td>
+                                                        <td><span class="color_dark">10.0000M</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Product Weight:</td>
+                                                        <td>10.0000KG</td>
+                                                    </tr>
+                                                </table>
+                                                <hr class="divider_type_3 m_bottom_10">
+                                                <p class="m_bottom_10">Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. </p>
+                                                <hr class="divider_type_3 m_bottom_15">
+                                                <div class="m_bottom_15">
+                                                    <s class="v_align_b f_size_ex_large">$152.00</s><span class="v_align_b f_size_big m_left_5 scheme_color fw_medium">$102.00</span>
+                                                </div>
+                                                <table class="description_table type_2 m_bottom_15">
+                                                    <tr>
+                                                        <td class="v_align_m">Size:</td>
+                                                        <td class="v_align_m">
+                                                            <div class="custom_select f_size_medium relative d_inline_middle">
+                                                                <div class="select_title r_corners relative color_dark">s</div>
+                                                                <ul class="select_list d_none"></ul>
+                                                                <select name="product_name">
+                                                                    <option value="s">s</option>
+                                                                    <option value="m">m</option>
+                                                                    <option value="l">l</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="v_align_m">Quantity:</td>
+                                                        <td class="v_align_m">
+                                                            <div class="clearfix quantity r_corners d_inline_middle f_size_medium color_dark">
+                                                                <button class="bg_tr d_block f_left" data-direction="down">-</button>
+                                                                <input type="text" name="" readonly value="1" class="f_left">
+                                                                <button class="bg_tr d_block f_left" data-direction="up">+</button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="clearfix m_bottom_15">
+                                                    <button class="button_type_12 r_corners bg_scheme_color color_light tr_delay_hover f_left f_size_large">Add to Cart</button>
+                                                    <button class="button_type_12 bg_light_color_2 tr_delay_hover f_left r_corners color_dark m_left_5 p_hr_0"><i class="fa fa-heart-o f_size_big"></i><span class="tooltip tr_all_hover r_corners color_dark f_size_small">Wishlist</span></button>
+                                                    <button class="button_type_12 bg_light_color_2 tr_delay_hover f_left r_corners color_dark m_left_5 p_hr_0"><i class="fa fa-files-o f_size_big"></i><span class="tooltip tr_all_hover r_corners color_dark f_size_small">Compare</span></button>
+                                                    <button class="button_type_12 bg_light_color_2 tr_delay_hover f_left r_corners color_dark m_left_5 p_hr_0 relative"><i class="fa fa-question-circle f_size_big"></i><span class="tooltip tr_all_hover r_corners color_dark f_size_small">Ask a Question</span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+
+                            </div>
+                            <!--login popup-->
+
+
+
+
+
+
+
+
+
+                            <button class="t_align_c r_corners type_2 tr_all_hover animate_ftl" id="go_to_top"><i class="fa fa-angle-up"></i></button>
+
+
+                            <div class="popup_wrap d_none" id="login_popup">
+
+
+
+
+                                <section class="popup r_corners shadow" id="loginForm" style="margin-left: -195px; margin-top: -300.5px;">
+
+
+
+
+
+
+                                    <form action="/Account/Login" class="form-horizontal" method="post" role="form" novalidate="novalidate">
+                                        <input name="__RequestVerificationToken" type="hidden" value="mrsP3ZE1oZcYBweXIB8KmjRcCh6I5Y8EuT_bfPGMOFwj1xSHgpHotwCko7tT_jga3m0srfKGaxA46Xp_9kInSrK2_D8mCn-HXWtAvSFTmkU1">
+                                        <h4>Use a local account to log in.</h4>
+                                        <button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
+                                        <h3 class="m_bottom_20 color_dark">Log In</h3>
+                                        <ul>
+                                            <li class="m_bottom_15">
+                                                <label for="UserName" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="UserName">UserName</label></label><br>
+                                                <input class="form-control,r_corners full_width" data-val="true" data-val-required="The UserName field is required." did="UserName" name="UserName" type="text" value="">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="UserName" data-valmsg-replace="true"></span>
+                                            </li>
+
+
+
+                                            <li class="m_bottom_25">
+
+
+
+                                                <label for="password" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="Password">Password</label></label><br>
+
+                                                <input class="form-control,r_corners full_width" data-val="true" data-val-required="The Password field is required." id="password" name="Password" type="password">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                            </li>
+                                            <link href="/Content/bootstrap.css" rel="stylesheet">
+                                            <link href="/Content/site.css" rel="stylesheet">
+
+
+
+                                            <div class="checkbox">
+                                                <input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true">
+                                                <input name="RememberMe" type="hidden" value="false">
+                                                <label for="RememberMe">Remember me?</label>
+                                            </div>
+                                            <li class="clearfix m_bottom_30">
+                                                <button type="submit" value="Log in" class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In</button>
+                                                <div class="f_right f_size_medium f_mxs_none">
+
+                                                    <p class="color_dark">
+                                                        <a href="/Home/ForgotPassword?class=color_dark">Forget your password?</a>
+                                                    </p>
+
+                                                    <p class="color_dark">
+                                                        <a href="/Home/ForgotPassword?class=color_dark">Forgot your password?</a>
+                                                    </p>
+
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </form>
+
+
+
+
+                                    <footer class="bg_light_color_1 t_mxs_align_c">
+
+                                        <section id="socialLoginForm">
+
+                                            <h4>Use another service to log in.</h4>
+                                            <hr>
+                                            <form action="/Account/ExternalLogin" method="post">
+                                                <input name="__RequestVerificationToken" type="hidden" value="zcR2Jgt31XW-l0LfzodxBUD4IMELVIqVFXYnUzMjgxJtS97U_12APFRdmw1DEGsawXFPQbM9PR5lkD3HgpAWzi_MUbimWg2-cSNY4aEcOZI1">            <div id="socialLoginList">
+                                                    <p>
+                                                        <button type="submit" class="btn btn-default" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account">Facebook</button>
+                                                        <button type="submit" class="btn btn-default" id="Google" name="provider" value="Google" title="Log in using your Google account">Google</button>
+                                                    </p>
+                                                </div>
+                                            </form>
+
+                                        </section>
+
+
+
+
+
+                                    </footer>
+                                    <footer class="bg_light_color_1 t_mxs_align_c">
+                                        <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
+                                        <section class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">
+                                            <a href="/Home/Register?style=color%3A%23FFFFFF%3B">Create an Account</a>
+                                        </section>
+
+                                    </footer>
+
+
+                                </section>
+                            </div>
+                            <!--scripts include-->
+                            <script src="@Url.Content("~/Content/js/jquery-2.1.0.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/retina.js")"></script>
+                            <script src="@Url.Content("~/Content/js/jquery.themepunch.plugins.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/jquery.themepunch.revolution.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/waypoints.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/owl.carousel.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/jquery.tweet.min.js")"></script>
+                            <script src="@Url.Content("~/Content/js/jquery.custom-scrollbar.js")"></script>
+                            <script src="@Url.Content("~/Content/js/scripts.js")"></script>
+                            <script type="text/javascript" src="../../../../s7.addthis.com/js/300/addthis_widget.js#pubid=xa-5306f8f674bfda4c"></script>
+                            @Scripts.Render("~/bundles/jquery")
+                            @Scripts.Render("~/bundles/bootstrap")
+                            @RenderSection("scripts", required: false)
+                        </body>
+                        <!-- Mirrored from velikorodnov.com/html/flatastic/classic/index_layout_wide.html by HTTrack Website Copier/3.x [XR&CO'2013], Tue, 01 Nov 2016 08:25:28 GMT -->
+                    </html>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using GWA.Helpers;
+
 using System.IO;
 using System.Net;
 using PagedList;
@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GWA.Data.Context;
 using Microsoft.AspNet.Identity.EntityFramework;
+using GWA.WEB1.Helpers;
 
 namespace GWA.WEB1.Controllers.Products
 {

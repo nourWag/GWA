@@ -26,7 +26,7 @@ namespace GWA.Domaine.Entities
 
         public string RegisterEmail { get; set; }
         public string RegisterUserName { get; set; }
-
+       
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Country { get; set; }
@@ -37,7 +37,19 @@ namespace GWA.Domaine.Entities
         public System.DateTime? BirthDate { get; set; }
         public virtual Session Session { get; set; }
         public virtual ICollection<Product> UserProducts { get; set; }
+        public bool activer { get; set; }
+        
 
+        public virtual ICollection<Seller> SellerSuiv { get; set; }
+
+        public virtual ICollection<Subscription> Subscription { get; set; }
+
+        public virtual ICollection<Notification> Notifications { get; set; }
+
+        public virtual ICollection<Auction> SellerAuctions { get; set; }
+
+        public virtual ICollection<Token> Tokens { get; set; }
+        public String PersonnalDescription { get; set; }
 
 
 

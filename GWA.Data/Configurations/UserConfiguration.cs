@@ -16,7 +16,20 @@ namespace GWA.Data.Configurations
             HasOptional(s => s.Session)
                .WithRequired(ad => ad.User);
 
-            
+
+            //ManytoMany
+
+            HasMany<Seller>(a => a.SellerSuiv )
+            .WithMany(a => a.BayersAbonnées)
+            .Map(x =>
+            {
+                x.MapLeftKey("SellerSuiv_id");
+                x.MapRightKey("BayersAbonnées_id");
+                x.ToTable("Abonnement");
+            });
+
+
+
         }
     }
 }

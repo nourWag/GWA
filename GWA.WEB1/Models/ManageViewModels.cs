@@ -7,11 +7,16 @@ namespace IdentitySample.Models
 {
     public class IndexViewModel
     {
+       
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        public LoginViewModel loginVM { get; set; }
+
+        public RegisterViewModel RegisterViewModel { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -61,7 +66,7 @@ namespace IdentitySample.Models
 
     public class AddPhoneNumberViewModel
     {
-        [Required]
+        //[Required]
         [Phone]
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
@@ -69,11 +74,11 @@ namespace IdentitySample.Models
 
     public class VerifyPhoneNumberViewModel
     {
-        [Required]
+        //[Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
 
-        [Required]
+        //[Required]
         [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

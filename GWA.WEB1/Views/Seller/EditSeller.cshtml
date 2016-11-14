@@ -1,0 +1,306 @@
+﻿@model GWA.WEB1.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    
+     
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <!-- left column -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="text-center">
+        <img src = "http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
+        <h6>Upload a different photo...</h6>
+        <input type = "file" class="text-center center-block well well-sm">
+      </div>
+    </div>
+    <!-- edit form column -->
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        <div class="alert alert-info alert-dismissable">
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <i class="fa fa-coffee"></i>
+            This is an<strong>.alert</strong>.Use this to show important messages to the user.
+        </div>
+        <h3>Personal info</h3>
+
+
+        <div class="col-lg-8 col-md-8 col-sm-8 m_xs_bottom_30">
+            <h2 class="tt_uppercase color_dark m_bottom_25">Edite Profil</h2>
+            <form id="contactform">
+                <ul>
+                    <li class="clearfix m_bottom_15">
+
+
+
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">Your Name</label>
+
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "col-lg-8", @Style = "width:300px" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "full_width r_corners" })
+
+                        </div>
+
+
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">LastName</label>
+
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @Style = "width:300px" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger", @Style = "width:300px" })
+
+
+                        </div>
+
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">Country</label>
+                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @Style = "width:300px" } })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger", @Style = "width:300px" })
+
+
+
+
+                        </div>
+
+
+
+
+
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">Email</label>
+
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @Style = "width:300px" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger", @Style = "width:300px" })
+
+                        </div>
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">HomeTown</label>
+
+                            @Html.EditorFor(model => model.HomeTown, new { htmlAttributes = new { @class = "form-control", @Style = "width:300px" } })
+                            @Html.ValidationMessageFor(model => model.HomeTown, "", new { @class = "text-danger", @Style = "width:300px" })
+
+
+
+                        </div>
+
+
+                        <div class="f_left half_column" style="margin: 10px;">
+                            <label for="cf_name" class="required d_inline_b m_bottom_5">RegisterUserName</label>
+
+                            @Html.EditorFor(model => model.RegisterUserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.RegisterUserName, "", new { @class = "text-danger" })
+
+
+
+                        </div>
+
+
+
+
+
+
+                    </li>
+
+                </ul>
+
+
+             
+
+
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                      
+                        <a href="/Account/Login/loginLink" class="default_t_color" data-popup="#login_popup1" style="padding-left: 1.8em" id="loginLink">Enregistrer</a>
+                        <a href="/Account/test" >test</a>
+
+                        @*<a href="/Account/Edit" class="default_t_color" data-popup="#login_popup1" style="padding-left: 1.8em" id="loginLink">Enregistrer</a>
+
+
+
+                        <input type="submit" value="Save" class="btn btn-default" />*@
+                        @*< a href = "/Account/Login/loginLink" class="default_t_color" data-popup="#login_popup1" style="padding-left: 1.8em" id="loginLink">Desactiver</a>*@
+
+
+                        @*<input type = "submit" class="btn btn-primary"  value="Register" style="width:120px" data-popup="#login_popup1"  />*@
+                        <span></span>
+                        @*<br />*@
+                        @*<input class="btn btn-default" value="deactiver" type="reset" style="width:120px">*@
+                        @*<li class="default_t_color">@Html.ActionLink("Desactiver", "Desactiver", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
+
+
+                        <li class="default_t_color"><a href="/Account/Desactiver" id="registerLink">Desactiver</a></li>
+                    </div>
+                </div>
+
+
+
+
+
+               
+                <div class="popup_wrap d_none" id="login_popup1">
+
+
+                    <section class="popup r_corners shadow" id="loginForm" style="margin-left: -195px; margin-top: -300.5px;">
+
+
+                        @*<form action="/Account/Edit" class="form-horizontal" method="post" role="form">*@
+                            <input name="__RequestVerificationToken" type="hidden" value="l0UHu_nGyNOabKwkafT1__a1344Xi9VIYzQ2oBTtHPV0hNoW8oOGhMBiyT8I3wraYrF0IOms_NeVUTe1TWPq8ZUKjaAXY07lJgIMgOXrWUA1">                <button class="bg_tr color_dark tr_all_hover text_cs_hover close f_size_large"><i class="fa fa-times"></i></button>
+                            <h3 class="m_bottom_20 color_dark">Log In</h3>
+
+                            <ul>
+
+
+
+
+
+
+                                <li class="m_bottom_15">
+                                    <label for="username" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="Email">Email</label> </label><br>
+
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+
+
+                                    @*<input style="width:300px" class="form-control text-box single-line" id="UserName" name="UserName" type="text" >*@
+                                    @*<input class="form-control,r_corners full_width" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="username" name="Email" type="text" value="">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>*@
+
+
+                                </li>
+
+
+
+                                <li class="m_bottom_25">
+
+
+
+                                    <label for="password" class="m_bottom_5 d_inline_b"><label class="col-md-2 control-label,m_bottom_5 d_inline_b" for="Password">Password</label></label><br>
+
+                                    <input class="form-control,r_corners full_width" data-val="true" data-val-required="The Password field is required." id="password" name="Password" type="password">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </li>
+                                <link href="/Content/bootstrap.css" rel="stylesheet">
+                                <link href="/Content/site.css" rel="stylesheet">
+
+
+
+                                <div class="checkbox">
+                                    <input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true"><input name="RememberMe" type="hidden" value="false">
+                                    <label for="RememberMe">Remember me?</label>
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <li class="clearfix m_bottom_30">
+
+                                    <button type="submit" value="Log in" class="button_type_4 tr_all_hover r_corners f_left bg_scheme_color color_light f_mxs_none m_mxs_bottom_15">Log In</button>
+                                    <div class="f_right f_size_medium f_mxs_none">
+
+                                        <p class="color_dark">
+                                            <a href="/Home/ForgotPassword?class=color_dark">Forget your password?</a>
+                                        </p>
+
+                                        <p class="color_dark">
+                                            <a href="/Home/ForgotPassword?class=color_dark">Forgot your password?</a>
+                                        </p>
+
+
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        @*</form>*@
+                        <footer class="bg_light_color_1 t_mxs_align_c">
+
+                            <section id="socialLoginForm">
+
+                                <h4>Use another service to log in.</h4>
+                                <hr>
+                               
+                                
+                                 <form action="/Account/ExternalLogin" method="post">
+                                    <input name="__RequestVerificationToken" type="hidden" value="zcR2Jgt31XW-l0LfzodxBUD4IMELVIqVFXYnUzMjgxJtS97U_12APFRdmw1DEGsawXFPQbM9PR5lkD3HgpAWzi_MUbimWg2-cSNY4aEcOZI1">            <div id="socialLoginList">
+                                        <p>
+                                            <button type="submit" class="btn btn-default" id="Facebook" name="provider" value="Facebook" title="Log in using your Facebook account">Facebook</button>
+                                            <button type="submit" class="btn btn-default" id="Google" name="provider" value="Google" title="Log in using your Google account">Google</button>
+                                        </p>
+                                    </div>
+                                </form>
+
+                            </section>
+
+
+
+
+
+                        </footer>
+                        <footer class="bg_light_color_1 t_mxs_align_c">
+                            <h3 class="color_dark d_inline_middle d_mxs_block m_mxs_bottom_15">New Customer?</h3>
+                            <section class="tr_all_hover r_corners button_type_4 bg_dark_color bg_cs_hover color_light d_inline_middle m_mxs_left_0">
+                                <a href="/Home/Register?style=color%3A%23FFFFFF%3B">Create an Account</a>
+                            </section>
+
+                        </footer>
+
+
+                    </section>
+               
+                
+                 </div>
+           
+            
+            
+            
+            
+            
+            
+             </form>
+
+
+
+        </div>
+       
+    </div>
+
+    
+
+
+}
+
+
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GWA.Service.Products
 {
-    interface IProductInterface : IService<Product>
+   public interface IProductInterface : IService<Product>
     {
     }
 }

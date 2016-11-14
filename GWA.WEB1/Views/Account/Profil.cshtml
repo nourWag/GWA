@@ -1,130 +1,493 @@
 ﻿@model IdentitySample.Models.RegisterViewModel
-
+@using GWA.WEB1.Models
 @{
     ViewBag.Title = "Profil";
 }
 
-<h2>Profil</h2>
-
 <div>
-    <h4>RegisterViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserRoles)
-        </dt>
+   
+    
 
-        <dd>
-            @Html.DisplayFor(model => model.UserRoles)
-        </dd>
+    <style>
+        /* USER PROFILE PAGE */
+        .card {
+            margin-top: 20px;
+            padding: 30px;
+            background-color: rgba(214, 224, 226, 0.2);
+            -webkit-border-top-left-radius: 5px;
+            -moz-border-top-left-radius: 5px;
+            border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-top-right-radius: 5px;
+            border-top-right-radius: 5px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+            .card.hovercard {
+                position: relative;
+                padding-top: 0;
+                overflow: hidden;
+                text-align: center;
+                background-color: #fff;
+                background-color: rgba(255, 255, 255, 1);
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                .card.hovercard .card-background {
+                    height: 130px;
+                }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+        .card-background img {
+            -webkit-filter: blur(25px);
+            -moz-filter: blur(25px);
+            -o-filter: blur(25px);
+            -ms-filter: blur(25px);
+            filter: blur(25px);
+            margin-left: -100px;
+            margin-top: -200px;
+            min-width: 130%;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
+        .card.hovercard .useravatar {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </dt>
+            .card.hovercard .useravatar img {
+                width: 100px;
+                height: 100px;
+                max-width: 100px;
+                max-height: 100px;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                border-radius: 50%;
+                border: 5px solid rgba(255, 255, 255, 0.5);
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmPassword)
-        </dd>
+        .card.hovercard .card-info {
+            position: absolute;
+            bottom: 14px;
+            left: 0;
+            right: 0;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RegisterUserName)
-        </dt>
+            .card.hovercard .card-info .card-title {
+                padding: 0 5px;
+                font-size: 20px;
+                line-height: 1;
+                color: #262626;
+                background-color: rgba(255, 255, 255, 0.1);
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.RegisterUserName)
-        </dd>
+        .card.hovercard .card-info {
+            overflow: hidden;
+            font-size: 12px;
+            line-height: 20px;
+            color: #737373;
+            text-overflow: ellipsis;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RegisterEmail)
-        </dt>
+        .card.hovercard .bottom {
+            padding: 0 20px;
+            margin-bottom: 17px;
+        }
 
-        <dd>
-            @Html.DisplayFor(model => model.RegisterEmail)
-        </dd>
+        .btn-pref .btn {
+            -webkit-border-radius: 0 !important;
+        }
+    </style>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+    <script type="text/javascript">
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+        $(document).ready(function () {
+            $(".btn-pref .btn").click(function () {
+                $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+                // $(".tab").addClass("active"); // instead of this do the below
+                $(this).removeClass("btn-default").addClass("btn-primary");
+            });
+        });
+    </script>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+    <div class="card hovercard">
+        <div class="card-background">
+            <img class="card-bkimg" alt="" src="~/Content/Upload/profil.jpg">
+            <!-- http://lorempixel.com/850/280/people/9/ -->
+        </div>
+        <div class="useravatar  ">
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            @if (@Model.ImageUrl == null)
+            {
+                <img alt="" src="~/Content/Upload/profil.jpg">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
+            }
+            else
+            {
+                string path = @Model.ImageUrl;
 
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
+                <img alt="Produit" src="/Content/Upload/@Url.Content(path)" class="avatar img-circle img-thumbnail" alt="avatar">
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.JoinDate)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.JoinDate)
-        </dd>
+           
+        </div>
+        <div class="card-info">
+            <span class="card-title">Pamela Anderson</span>
+        </div>
+    </div>
+    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab" style="height :50px">
+                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <div class="hidden-xs">info</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab" style="height :50px">
+                <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                <div class="hidden-xs">Favorites</div>
+            </button>
+        </div>
+        <div class="btn-group" role="group">
+            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"style="height :50px">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <div class="hidden-xs">Following</div>
+            </button>
+        </div>
+    </div>
+    <div class="well">
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1" style="height: 400px;">
+           
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EmailLinkDate)
-        </dt>
+                <div class="col-lg-4 col-md-4 col-sm-4 m_xs_bottom_30" style="height:300px">
+                    <h2 class="tt_uppercase color_dark m_bottom_25">@Html.DisplayFor(model => model.UserName)</h2>
+                    <h2 class="tt_uppercase color_dark m_bottom_25">@Html.DisplayFor(model => model.FirstName)</h2>
+                    <ul class="c_info_list">
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_15">
+                                <i class="fa fa-map-marker f_left color_dark"></i>
+                                <p class="contact_e">@Html.DisplayFor(model => model.HomeTown),<br> @Html.DisplayFor(model => model.HomeTown).</p>
+                            </div>
+                        </li>
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_10">
+                                <i class="fa fa-phone f_left color_dark"></i>
+                                <p class="contact_e">@Html.DisplayFor(model => model.PhoneNumber)</p>
+                            </div>
+                        </li>
+                        <li class="m_bottom_10">
+                            <div class="clearfix m_bottom_10">
+                                <i class="fa fa-envelope f_left color_dark"></i>
+                                <a class="contact_e default_t_color" href="mailto:#">@Html.DisplayFor(model => model.Email)</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="clearfix">
+                                <i class="fa fa-clock-o f_left color_dark"></i>
+                                <p class="contact_e">Monday - Friday: @Html.DisplayFor(model => model.JoinDate) <br>Saturday: @Html.DisplayFor(model => model.EmailLinkDate)<br> Sunday: @Html.DisplayFor(model => model.LAstLoginDate)</p>
+                                <br /> <i class="glyphicon glyphicon-gift"></i> @Html.DisplayFor(model => model.BirthDate)
+                            </div>
+                        </li>
+                    </ul>
+              
+                
+                    Votres Roles :
 
-        <dd>
-            @Html.DisplayFor(model => model.EmailLinkDate)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LAstLoginDate)
-        </dt>
+                    @foreach (var item in Model.UserRolesS)
+                    {
 
-        <dd>
-            @Html.DisplayFor(model => model.LAstLoginDate)
-        </dd>
+                        <h4>@item</h4>
+                    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HomeTown)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.HomeTown)
-        </dd>
+                    @Html.ActionLink("Edit My Account", "Edit")
+                
+                  </div>
+  
+                         
+                        
+                  
+                 
+              
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
+             
 
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
+          
+            
+              </div>
+           
+            
+            
+             <div class="tab-pane fade in" id="tab2">
+                <h3>This is tab 2</h3>
+                 <div class="page_content_offset">
 
-    </dl>
+
+
+                     <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+                         <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+
+                             <div class="col-lg-6 col-md-6 col-sm-12 m_sm_bottom_35 blog_animate animate_ftr animate_horizontal_finished">
+                                 <div class="clearfix m_bottom_25 m_sm_bottom_20">
+                                     <h2 class="tt_uppercase color_dark f_left">Products Auctions</h2>
+                                     <div class="f_right clearfix nav_buttons_wrap">
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left tr_delay_hover r_corners blog_prev"><i class="fa fa-angle-left"></i></button>
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left m_left_5 tr_delay_hover r_corners blog_next"><i class="fa fa-angle-right"></i></button>
+                                     </div>
+                                 </div>
+                                 <!--blog carousel-->
+                                 <div class="blog_carousel owl-carousel owl-theme" style="display: block; opacity: 1;">
+                                     @*<div class="owl-wrapper-outer autoHeight" style="height: 203px;">*@
+                                     @*<div class="owl-wrapper" style="width: 3330px; left: 0px; display: block; transition: all 0ms ease; transform: translate3d(-555px, 0px, 0px); transform-origin: 832.5px center 0px; perspective-origin: 832.5px center;">*@
+
+                                     @foreach (var item in Model.ProductView)
+                                    {
+
+                                 @Html.Partial("_ProductForUser", item)
+
+                                    }
+
+
+
+                                     @*</div>*@
+                                     @*</div>*@
+
+
+                                     <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+                                 </div>
+                             </div>
+
+                             <div class="col-lg-6 col-md-6 col-sm-12 m_sm_bottom_35 blog_animate animate_ftr animate_horizontal_finished">
+                                 <div class="clearfix m_bottom_25 m_sm_bottom_20">
+                                     <h2 class="tt_uppercase color_dark f_left">List Product Win</h2>
+                                     <div class="f_right clearfix nav_buttons_wrap">
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left tr_delay_hover r_corners blog_prev"><i class="fa fa-angle-left"></i></button>
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left m_left_5 tr_delay_hover r_corners blog_next"><i class="fa fa-angle-right"></i></button>
+                                     </div>
+                                 </div>
+                                 <!--blog carousel-->
+                                 <div class="blog_carousel owl-carousel owl-theme" style="display: block; opacity: 1;">
+                                     @*<div class="owl-wrapper-outer autoHeight" style="height: 203px;">*@
+                                     @*<div class="owl-wrapper" style="width: 3330px; left: 0px; display: block; transition: all 0ms ease; transform: translate3d(-555px, 0px, 0px); transform-origin: 832.5px center 0px; perspective-origin: 832.5px center;">*@
+
+                                     @foreach (var item in Model.ProductViewWin)
+                                     {
+
+                                         @Html.Partial("_ProductForUser", item)
+
+                                     }
+
+
+
+                                     @*</div>*@
+                                     @*</div>*@
+
+
+                                     <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+                                 </div>
+                             </div>
+
+
+                         
+                          </div></div>
+
+
+
+
+                 </div>
+
+                
+                 <div class="page_content_offset">
+
+
+
+                     <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+                         <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+
+                             <div class="col-lg-6 col-md-6 col-sm-12 m_sm_bottom_35 blog_animate animate_ftr animate_horizontal_finished">
+                                 <div class="clearfix m_bottom_25 m_sm_bottom_20">
+                                     <h2 class="tt_uppercase color_dark f_left">Products Auctions No Win</h2>
+                                     <div class="f_right clearfix nav_buttons_wrap">
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left tr_delay_hover r_corners blog_prev"><i class="fa fa-angle-left"></i></button>
+                                         <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left m_left_5 tr_delay_hover r_corners blog_next"><i class="fa fa-angle-right"></i></button>
+                                     </div>
+                                 </div>
+                                 <!--blog carousel-->
+                                 <div class="blog_carousel owl-carousel owl-theme" style="display: block; opacity: 1;">
+                                     @*<div class="owl-wrapper-outer autoHeight" style="height: 203px;">*@
+                                     @*<div class="owl-wrapper" style="width: 3330px; left: 0px; display: block; transition: all 0ms ease; transform: translate3d(-555px, 0px, 0px); transform-origin: 832.5px center 0px; perspective-origin: 832.5px center;">*@
+
+                                     @foreach (var item in Model.ProductViewNoWin)
+                                     {
+
+                                         @Html.Partial("_ProductForUser", item)
+
+                                     }
+
+
+
+                                     @*</div>*@
+                                     @*</div>*@
+
+
+                                     <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page"><span class=""></span></div><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+                                 </div>
+                             </div>
+
+
+                         </div>
+                     </div>
+
+
+
+
+                 </div>
+
+                 
+                
+                <dd>
+                    @Html.DisplayFor(model => model.nbrUserAccAuction)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.nbrUserAccAuction)
+                </dt>
+
+            </div>
+
+
+
+            <div class="tab-pane fade in" id="tab3">
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>
+                <div>
+                    Search Seller By Country : @Html.TextBox("searchStringC")
+                </div>
+               
+            </td>
+           
+         
+            <td>
+            <td> <input type="submit" value="Search" id="submit" checked> </td>
+
+        </tr>
+    </table>
+}       
+                @using (Html.BeginForm())
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <div>
+                                    Search Seller By Country : @Html.TextBox("searchStringN")
+                                </div>
+                                
+                            </td>
+
+
+                            <td>
+                            <td> <input type="submit" value="Search" id="submit" checked> </td>
+
+                        </tr>
+                    </table>
+                }             
+
+                
+                
+                    <h3>Abonnements : @ViewBag.nbrSellerSuivre </h3> 
+<div class="page_content_offset">
+
+
+                <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+
+
+                <div class="row clearfix m_bottom_45 m_sm_bottom_35">
+                    
+                    <!--testimonials-->
+                    <div class="col-lg-6 col-md-6 col-sm-12 ti_animate animate_ftr animate_horizontal_finished">
+                        <div class="clearfix m_bottom_25 m_sm_bottom_20">
+                            <h2 class="tt_uppercase color_dark f_left f_mxs_none m_mxs_bottom_15">What Our Sellers Say</h2>
+                            <div class="f_right clearfix nav_buttons_wrap f_mxs_none">
+                                <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left tr_delay_hover r_corners ti_prev"><i class="fa fa-angle-left"></i></button>
+                                <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left m_left_5 tr_delay_hover r_corners ti_next"><i class="fa fa-angle-right"></i></button>
+                            </div>
+                        </div>
+                        <!--testimonials carousel-->
+                        <div class="testiomials_carousel owl-carousel owl-theme" style="display: block; opacity: 1;">
+                            @*<div  style="height: 192px;">*@
+                                @*<div class="owl-wrapper" style="width: 330px; left: 0px; display: block;">*@
+
+                                    @foreach (var item in Model.UserSuivre)
+                                    {
+
+                                        @Html.Partial("_ProfilMySuiv", item)
+                                    }
+
+
+                                @*</div>*@
+                            @*</div>*@
+
+
+                            <div class="owl-controls clickable"><div class="owl-pagination"><div class="owl-page active"><span class=""></span></div><div class="owl-page"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+                        </div>
+                    </div>
+              
+                
+                  </div>
+            </div>
+
 </div>
+
+
+
+
+
+                
+</div>
+
+
+
+
+
+   
+
+                    @*@foreach (var item in Model.UserSuivre)
+            {
+
+                @Html.Partial("_ProfilMySuiv", item)
+
+            }*@
+
+
+                   
+                    @*@foreach (var item in Model.UserAbonne)
+            {
+
+                @Html.Partial("_ProfilMySuiv", item)
+
+            }*@
+
+
+
+
+                </div>
+        </div>
+    </div>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+
+  
+   
     @Html.ActionLink("Back to List", "Index")
 </p>

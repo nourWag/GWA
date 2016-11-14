@@ -16,6 +16,14 @@ using GWA.Data.Context;
 using Microsoft.AspNet.Identity.EntityFramework;
 using GWA.Domaine.Entities;
 using GWA.Service.UserService.Service;
+using GWA.Service.Pattern;
+using System.Net;
+using System.Collections.Generic;
+using GWA.WEB1.Helpers;
+using GWA.WEB1.Models.Product;
+using System.Collections;
+using GWA.WEB1.Models;
+using System.IO;
 
 namespace IdentitySample.Controllers
 {
@@ -84,6 +92,7 @@ namespace IdentitySample.Controllers
 
         private bool HasPassword()
         {
+           
             throw new NotImplementedException();
         }
 
@@ -96,7 +105,7 @@ namespace IdentitySample.Controllers
         // POST: /Account/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
+        public async Task<ActionResult> AddPhoneNumber(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -105,18 +114,18 @@ namespace IdentitySample.Controllers
 
             // Generate the token 
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(
-                                       User.Identity.GetUserId(), model.Number);
+                                       User.Identity.GetUserId(), model.AddPhoneNumberViewModel.Number);
             if (UserManager.SmsService != null)
             {
                 var message = new IdentityMessage
                 {
-                    Destination = model.Number,
+                    Destination = model.AddPhoneNumberViewModel.Number,
                     Body = "Your security code is: " + code
                 };
                 // Send token
                 await UserManager.SmsService.SendAsync(message);
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.AddPhoneNumberViewModel.Number });
         }
 
         // POST: /Account/VerifyPhoneNumber
@@ -190,40 +199,122 @@ namespace IdentitySample.Controllers
             private set { _signInManager = value; }
         }
 
-        //
-        // POST: /Account/Login
+        ////
+        //// POST: /Account/Login
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+        //    // Require the user to have a confirmed email before they can log on.
+        //    var user = await UserManager.FindByNameAsync(model.Email);
+        //    if (user != null)
+        //    {
+        //        if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+        //        {
+        //            string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+        //            ViewBag.errorMessage = "You must have a confirmed email to log on.";
+        //            return View("Error");
+        //        }
+        //    }
+
+        //    // This doen't count login failures towards lockout only two factor authentication
+        //    // To enable password failures to trigger lockout, change to shouldLockout: true
+
+        //   // var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+        //   var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,true);
+        //    switch (result)
+        //    {
+        //        case SignInStatus.Success:
+        //            return RedirectToLocal(returnUrl);
+        //            //return View("index");
+        //        case SignInStatus.LockedOut:
+        //        //return View("index");
+        //            return View("Lockout");
+        //        case SignInStatus.RequiresVerification:
+        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //           // return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+        //        case SignInStatus.Failure:
+        //        default:
+        //            ModelState.AddModelError("", "Invalid login attempt.");
+        //            return View(model);
+        //    }
+        //}
+
+        ////
+        //// GET: /Account/VerifyCode
+        //[AllowAnonymous]
+        //public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        //{
+        //    // Require that the user has already logged in via username/password or external login
+        //    if (!await SignInManager.HasBeenVerifiedAsync())
+        //    {
+        //        return View("Error");
+        //    }
+        //    var user = await UserManager.FindByIdAsync(await SignInManager.GetVerifiedUserIdAsync());
+        //    if (user != null)
+        //    {
+        //        ViewBag.Status = "For DEMO purposes the current " + provider + " code is: " + await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
+        //    }
+        //    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        //}
+
+
+        // POST: /Account/Login   
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            // Require the user to have a confirmed email before they can log on.
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user != null)
-            {
-                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                {
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
-                    return View("Error");
-                }
-            }
 
-            // This doen't count login failures towards lockout only two factor authentication
-            // To enable password failures to trigger lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            // This doesn't count login failures towards account lockout   
+            // To enable password failures to trigger account lockout, change to shouldLockout: true   
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            var UserManager = new UserManager<User>(new UserStore<User>(context));
+            User user = UserManager.FindByName(model.UserName);
+            //var user =  service.GetUser(userId);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+
+                        if (isAdminUser(user))
+                        {
+
+                            return RedirectToAction("Index", "UsersAdmin");
+                        }
+
+                        if (isExpertUser(user))
+                        {
+
+                            return RedirectToAction("Index", "Expert");
+                        }
+                        if (isBookeperUser(user))
+                        {
+
+                            return RedirectToAction("Index", "Bookeper");
+                        }
+                        if (isSellerUser(user))
+                        {
+
+                            return RedirectToAction("Index", "Seller");
+                        }
+                        return RedirectToLocal(returnUrl);
+
+                    }
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -231,24 +322,89 @@ namespace IdentitySample.Controllers
             }
         }
 
-        //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl)
+        public Boolean isAdminUser(User user)
         {
-            // Require that the user has already logged in via username/password or external login
+           // var user = User.Identity;
+            //GWAContext context = new GWAContext();
+            //var UserManager = new UserManager<User>(new UserStore<User>(context));
+            var s = UserManager.GetRoles(user.Id);
+            if (s[0].ToString() == "Admin")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+          
+        }
+
+        public Boolean isExpertUser(User user)
+        {
+           
+                //var user = User.Identity;
+                //GWAContext context = new GWAContext();
+                //var UserManager = new UserManager<User>(new UserStore<User>(context));
+                var s = UserManager.GetRoles(user.Id);
+                if (s[0].ToString() == "Expert")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+           
+        }
+
+        public Boolean isBookeperUser(User user)
+        {
+           
+                //var user = User.Identity;
+                //GWAContext context = new GWAContext();
+                //var UserManager = new UserManager<User>(new UserStore<User>(context));
+                var s = UserManager.GetRoles(user.Id);
+                if (s[0].ToString() == "bookkeeper")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+           
+        }
+
+        public Boolean isSellerUser(User user)
+        {
+           
+                //var user = User.Identity;
+                //GWAContext context = new GWAContext();
+                //var UserManager = new UserManager<User>(new UserStore<User>(context));
+
+                var s = UserManager.GetRoles(user.Id);
+                if (s[0].ToString() == "Seller")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+           
+        }
+        //   
+        // GET: /Account/VerifyCode   
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        {
+            // Require that the user has already logged in via username/password or external login   
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
                 return View("Error");
             }
-            var user = await UserManager.FindByIdAsync(await SignInManager.GetVerifiedUserIdAsync());
-            if (user != null)
-            {
-                ViewBag.Status = "For DEMO purposes the current " + provider + " code is: " + await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl });
+            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
-
         //
         // POST: /Account/VerifyCode
         [HttpPost]
@@ -280,95 +436,230 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
+            
+             ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
                                             .ToList(), "Name", "Name");
-
+          
             return View();
         }
 
         //
         // POST: /Account/Register
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Register(RegisterViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // var custEmail = FindEmail(model.ConfirmPassword);
+        //        // var custUserName = FindUserName(model.);
+        //        var user = new User
+        //        {
+        //            UserName = model.UserName,
+        //            Email = model.Email,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            Country = model.Country,
+        //            BirthDate = model.BirthDate,
+        //            JoinDate = DateTime.Now
+        //            ,
+        //            EmailLinkDate = DateTime.Now,
+        //            LAstLoginDate = DateTime.Now,
+
+
+
+
+
+        //        };
+
+        //        ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
+        //                                   .ToList(), "Name", "Name");
+        //        //var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new GWAContext()));
+        //        //manager.Create(user);
+
+        //        var result = await UserManager.CreateAsync(user, model.Password);
+        //        if (result.Succeeded)
+        //        {
+
+        //            //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+        //            //UserManager.AddToRole(user.Id, "Manager");
+        //            //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //            //var callbackUrl = Url.Action(
+        //            //   "ConfirmEmail", "Account",
+        //            //   new { userId = user.Id, code = code },
+        //            //   protocol: Request.Url.Scheme);
+
+        //            //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+        //            //// ViewBag.Link = callbackUrl;   // Used only for initial demo.
+
+
+        //            //await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+
+        //            //UserManager.Create(user);
+        //            //context.SaveChanges();
+
+        //            //return View("DisplayEmail");
+
+
+
+
+
+        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+        //            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+        //            // Send an email with this link
+        //            // await UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+        //            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+        //            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+
+
+
+        //            await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+        //            await UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+        //            return View("DisplayEmail");
+        //            // return RedirectToAction("Index", "Home");
+
+
+
+        //        }
+        //        ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
+        //                                 .ToList(), "Name", "Name");
+        //        AddErrors(result);
+        //    }
+        //    ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
+        //                                  .ToList(), "Name", "Name");
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
+
+
+        // POST: /Account/Register   
+
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModelInsert model)
         {
+
+
             if (ModelState.IsValid)
             {
-                // var custEmail = FindEmail(model.ConfirmPassword);
-                // var custUserName = FindUserName(model.);
-                var user = new User {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Country = model.Country,
-                    BirthDate = model.BirthDate,
-                    JoinDate = DateTime.Now
-                    ,
-                    EmailLinkDate=DateTime.Now,
-                    LAstLoginDate=DateTime.Now
-            
+                User user = null;
+                if(model.UserRoles== "Admin")
+                {
+                     user = new Manager
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Country = model.Country,
+                        BirthDate = model.BirthDate,
+                        JoinDate = DateTime.Now,
+                        EmailLinkDate = DateTime.Now,
+                        LAstLoginDate = DateTime.Now,
+                    };
 
-                    
-                    
-                };
+                }
 
+                if (model.UserRoles == "Buyer")
+                {
+                    user = new Buyer
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Country = model.Country,
+                        BirthDate = model.BirthDate,
+                        JoinDate = DateTime.Now,
+                        EmailLinkDate = DateTime.Now,
+                        LAstLoginDate = DateTime.Now,
+                    };
+
+                }
+                if (model.UserRoles == "Seller")
+                {
+                    user = new Seller
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Country = model.Country,
+                        BirthDate = model.BirthDate,
+                        JoinDate = DateTime.Now,
+                        EmailLinkDate = DateTime.Now,
+                        LAstLoginDate = DateTime.Now,
+                    };
+                }
+                    if (model.UserRoles == "Expert")
+                    {
+                         user = new Expert
+                        {
+                            UserName = model.UserName,
+                            Email = model.Email,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            Country = model.Country,
+                            BirthDate = model.BirthDate,
+                            JoinDate = DateTime.Now,
+                            EmailLinkDate = DateTime.Now,
+                            LAstLoginDate = DateTime.Now,
+                        };
+
+                    }
+                if (model.UserRoles == "bookkeeper")
+                {
+                     user = new Bookkeeper
+                    {
+                        UserName = model.UserName,
+                        Email = model.Email,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Country = model.Country,
+                        BirthDate = model.BirthDate,
+                        JoinDate = DateTime.Now,
+                        EmailLinkDate = DateTime.Now,
+                        LAstLoginDate = DateTime.Now,
+                    };
+
+                }
                
-                //var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new GWAContext()));
-                //manager.Create(user);
+
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    //UserManager.AddToRole(user.Id, "Manager");
-                    //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action(
-                    //   "ConfirmEmail", "Account",
-                    //   new { userId = user.Id, code = code },
-                    //   protocol: Request.Url.Scheme);
-
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
-                    //// ViewBag.Link = callbackUrl;   // Used only for initial demo.
-
-
-                    //await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
-
-                    //UserManager.Create(user);
-                    //context.SaveChanges();
-
-                    //return View("DisplayEmail");
-
-
-
-
-
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771   
+                    // Send an email with this link   
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);   
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);   
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");   
+                    //Assign Role to user Here      
+                   
+                    //Ends Here   
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-
-
-                   
-
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    await UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
                     return View("DisplayEmail");
-                   // return RedirectToAction("Index", "Home");
-
-
-
+                    // return RedirectToAction("Index", "Users");
                 }
-                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Manager"))
-                                         .ToList(), "Name", "Name");
+                ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                          .ToList(), "Name", "Name");
                 AddErrors(result);
             }
-            // If we got this far, something failed, redisplay form
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                         .ToList(), "Name", "Name");
+            // If we got this far, something failed, redisplay form   
             return View(model);
         }
 
@@ -590,8 +881,9 @@ namespace IdentitySample.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "Manager");
+                    UserManager.AddToRole(user.Id, "Buyer");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    await this.UserManager.AddToRoleAsync(user.Id, "Buyer");
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -748,35 +1040,506 @@ namespace IdentitySample.Controllers
             smtpClient.Send(msg);
         }
 
-        // GET: Account/Details/5
-        public ActionResult Profil(string idUser)
+        // GET: /Account/Profil
+       
+      //  [AllowAnonymous]
+        
+        public ActionResult Profil()
         {
+            var userId = User.Identity.GetUserId();
+            User user = service.GetUser(userId);
+            List<string> listRoles = service.GetUserRoles(user.Id);
+
+            List<Seller> listuserSuiv= service.GetListSuivis(user.Id);
+
+            var nbrSellerSuivre = service.GetListSuivisnbr(user.Id);
+            ViewBag.nbrSellerSuivre = nbrSellerSuivre;
+            var listProduct = service.GetListProduitAuctionInscriBayresN(user.Id);
+
+            var listProductWin = service.GetListProduitAuctionWinBayres(user.Id);
+            var listProductNOWin = service.GetListProduitAuctionNoWinBayres(user.Id);
+
+
+            //List<User> listuserAbon = service.GetListAbonne(user.Id);
+
+            var nbrUserAccAuction = service.GetnbrUserAcepterAuction(user.Id);
 
             
-            User user = new User();
-           
-           
-            var UserManager = new UserManager<User>(new UserStore<User>(context));
-            user = UserManager.FindById(idUser);
-            // p = ps.GetById(id);
-            //u.is
-            RegisterViewModel  uvm = new RegisterViewModel 
+            
+
+            //
+            //var listProduct = service.GetListProduitAuctionSellSeller(user.Id);
+
+            //var listProduct = service.GetListProduitAuctionNoSellSeller(user.Id);
+
+
+         
+
+            //ViewBag.GetListSuivisnbr = service.GetListSuivisnbr(user.Id);
+
+
+
+            //ViewBag.GetListNotification = service.GetListNotification(user.Id);
+            //ViewBag.GetnbrUserAcepterAuction = service.GetListNotification(user.Id);
+            //ViewBag.GetListProduitAuctionInscriBayres = service.GetListNotification(user.Id);
+            //ViewBag.GetListProduitAuctionInscriBayres = service.GetListNotification(user.Id);
+
+            //ViewBag.GetListProduitAuctionWinBayres = service.GetListNotification(user.Id);
+            //ViewBag.GetListProduitAuctionNoWinBayres = service.GetListNotification(user.Id);
+
+            //ViewBag.GetListAttendSubAuctionBayres = service.GetListNotification(user.Id);
+            //ViewBag.GetListAccepterSubAuctionBayres = service.GetListNotification(user.Id);
+            //ViewBag.GetListProductFavories = service.GetListNotification(user.Id);
+
+
+
+            //list de suivis des utilisateur pour seller
+            List<RegisterViewModel> listuserSuivModel = new List<RegisterViewModel>();
+            
+            foreach (Seller item in listuserSuiv)
             {
-                //UserName = u.UserName,
+               List<string> listRolesSuivis = service.GetUserRoles(item.Id);
+                listuserSuivModel.Add(
+
+                    new RegisterViewModel
+                    {
+                        
+                        id = item.Id,
+                        ConfirmPassword = item.ConfirmPassword,
+                        HomeTown = item.HomeTown,
+                        Password = item.Password,
+                        RegisterEmail = item.RegisterEmail,
+                        RegisterUserName = item.RegisterUserName,
+                        UserRolesS =listRolesSuivis,
+                        UserName=item.UserName,
+                        Email = item.Email,
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Country = item.Country,
+                        BirthDate = item.BirthDate,
+                        JoinDate = item.JoinDate
+                            ,
+                        EmailLinkDate = item.EmailLinkDate,
+                        LAstLoginDate = item.LAstLoginDate,
+                        PersonnalDescription=item.PersonnalDescription,
+
+
+                    }
+                    );
+            }
+
+
+
+            //List<RegisterViewModel> listuserSuivAbonn = new List<RegisterViewModel>();
+
+            //foreach (User item in listuserAbon)
+            //{
+            //    List<string> listRolesSuivis = service.GetUserRoles(item.Id);
+            //    listuserSuivAbonn.Add(
+
+            //        new RegisterViewModel
+            //        {
+            //            id = item.Id,
+            //            ConfirmPassword = item.ConfirmPassword,
+            //            HomeTown = item.HomeTown,
+            //            Password = item.Password,
+            //            RegisterEmail = item.RegisterEmail,
+            //            RegisterUserName = item.RegisterUserName,
+            //            UserRolesS = listRolesSuivis,
+
+            //            Email = item.Email,
+            //            FirstName = item.FirstName,
+            //            LastName = item.LastName,
+            //            Country = item.Country,
+            //            BirthDate = item.BirthDate,
+            //            JoinDate = item.JoinDate
+            //                ,
+            //            EmailLinkDate = item.EmailLinkDate,
+            //            LAstLoginDate = item.LAstLoginDate,
+
+
+            //        }
+            //        );
+            //}
+
+
+
+            //List<ProductViewModel> listuserProductModel = new List<ProductViewModel>();
+            List<ProductViewModel> pvm = new List<ProductViewModel>();
+            foreach (var item in listProduct)
+            {
+                pvm.Add(
+                    new ProductViewModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        CreationDate = item.CreationDate,
+                        CategoryId = item.IdCategory,
+                        CurrentPrice = item.CurrentPrice,
+                        reference = item.reference,
+                        status = item.status,
+                        UpdateDate = item.UpdateDate,
+                        ImageUrl = item.ImageUrl,
+                        Description=item.Description
+                        //IdUser = item.IdUser
+                        //BestSeller = u
+                    });
+            }
+            List<ProductViewModel> pvmWin = new List<ProductViewModel>();
+            foreach (var item in listProductWin)
+            {
+                pvmWin.Add(
+                    new ProductViewModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        CreationDate = item.CreationDate,
+                        CategoryId = item.IdCategory,
+                        CurrentPrice = item.CurrentPrice,
+                        reference = item.reference,
+                        status = item.status,
+                        UpdateDate = item.UpdateDate,
+                        ImageUrl = item.ImageUrl,
+                        Description = item.Description
+                        //IdUser = item.IdUser
+                        //BestSeller = u
+                    });
+            }
+            List<ProductViewModel> pvmNowin = new List<ProductViewModel>();
+            foreach (var item in listProductNOWin)
+            {
+                pvmNowin.Add(
+                    new ProductViewModel
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        CreationDate = item.CreationDate,
+                        CategoryId = item.IdCategory,
+                        CurrentPrice = item.CurrentPrice,
+                        reference = item.reference,
+                        status = item.status,
+                        UpdateDate = item.UpdateDate,
+                        ImageUrl = item.ImageUrl,
+                        Description = item.Description
+                        //IdUser = item.IdUser
+                        //BestSeller = u
+                    });
+            }
+            RegisterViewModel uvmk = new RegisterViewModel
+            {
+                id = userId,
+                ConfirmPassword = user.ConfirmPassword,
+                HomeTown = user.HomeTown,
+                Password = user.Password,
+                RegisterEmail = user.RegisterEmail,
+                RegisterUserName = user.RegisterUserName,
+                UserRolesS = listRoles,
+
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Country = user.Country,
                 BirthDate = user.BirthDate,
-                JoinDate = user.JoinDate
-                    ,
+                JoinDate = user.JoinDate ,
+                PhoneNumber=user.PhoneNumber,
                 EmailLinkDate = user.EmailLinkDate,
                 LAstLoginDate = user.LAstLoginDate,
-               
+                UserSuivre = listuserSuivModel,
+                //UserAbonne= listuserSuivAbonn,
+                nbrUserAccAuction=nbrUserAccAuction,
+                ProductView= pvm,
+                ProductViewWin=pvmWin,
+                ProductViewNoWin=pvmNowin,
+                ImageUrl =user.ImageUrl
+
 
             };
-            return View(uvm);
+
+
+        //    LoginViewModel lvm = new LoginViewModel
+        //    {
+        //        uvm = uvmk,
+        //        role = service.GetUserRoles(user.Id)[0] 
+
+        //};
+                
+                return View(uvmk);
+           
+        }
+        // Post : Account/Profil
+        [HttpPost]
+        public ActionResult Profil(FormCollection collection)
+        {
+            //try
+            //{
+            List<RegisterViewModel> list = new List<RegisterViewModel>();
+            if (collection["searchStringC"] != null)
+            {
+                var Country = collection["searchStringC"];
+
+
+                var result = service.GetListUserByCountry(Country);
+               // List<RegisterViewModel> list = new List<RegisterViewModel>();
+                //string nom=null;
+                foreach (var item in result)
+                {
+
+                    List<string> listRolesSuivis = service.GetUserRoles(item.Id);
+                    list.Add(
+
+                        new RegisterViewModel
+                        {
+                            id = item.Id,
+                            ConfirmPassword = item.ConfirmPassword,
+                            HomeTown = item.HomeTown,
+                            Password = item.Password,
+                            RegisterEmail = item.RegisterEmail,
+                            RegisterUserName = item.RegisterUserName,
+                            UserRolesS = listRolesSuivis,
+                            UserName = item.UserName,
+                            Email = item.Email,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            Country = item.Country,
+                            BirthDate = item.BirthDate,
+                            JoinDate = item.JoinDate
+                                ,
+                            EmailLinkDate = item.EmailLinkDate,
+                            LAstLoginDate = item.LAstLoginDate,
+                            PersonnalDescription = item.PersonnalDescription,
+
+
+                        }
+                        );
+
+                }
+            }
+            if (collection["searchStringN"] != null) {
+                var FirstName = collection["searchStringN"];
+
+
+                var result = service.GetListUserByFirstName(FirstName);
+                
+                //string nom=null;
+                foreach (var item in result)
+                {
+
+                    List<string> listRolesSuivis = service.GetUserRoles(item.Id);
+                    list.Add(
+
+                        new RegisterViewModel
+                        {
+                            id = item.Id,
+                            ConfirmPassword = item.ConfirmPassword,
+                            HomeTown = item.HomeTown,
+                            Password = item.Password,
+                            RegisterEmail = item.RegisterEmail,
+                            RegisterUserName = item.RegisterUserName,
+                            UserRolesS = listRolesSuivis,
+                            UserName = item.UserName,
+                            Email = item.Email,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            Country = item.Country,
+                            BirthDate = item.BirthDate,
+                            JoinDate = item.JoinDate
+                                ,
+                            EmailLinkDate = item.EmailLinkDate,
+                            LAstLoginDate = item.LAstLoginDate,
+                            PersonnalDescription = item.PersonnalDescription,
+
+
+                        }
+                        );
+
+                }
+           
+
+            }
+
+            //RegisterViewModel m = new RegisterViewModel();
+            //m.Email = nom;
+            //list.Add(m);
+            return PartialView("_SellerRechercher", list);
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
+
+
         }
 
+
+        // GET: Account/Edit
+        [AllowAnonymous]
+        public ActionResult Edit()
+        {
+       
+          
+          var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.ImageUrl = user.ImageUrl;
+            RegisterModel uvmk = new RegisterModel
+            {
+                id = user.Id,
+                HomeTown = user.HomeTown,
+                RegisterEmail = user.RegisterEmail,
+                RegisterUserName = user.RegisterUserName,
+              UserName=user.UserName,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Country = user.Country,
+                BirthDate = user.BirthDate,
+              ImageUrl=user.ImageUrl
+                    
+               
+              
+
+
+            };
+
+            //LoginViewModel lvm = new LoginViewModel
+            //{
+            //    uvm = uvmk
+
+            //};
+            //return View(lvm);
+
+            return View(uvmk);
+
+
+           
+        }
+
+        // POST : Account/Edit
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> Edit(RegisterModel model, HttpPostedFileBase Image, string returnUrl)
+        {
+            var UserManager = new UserManager<User>(new UserStore<User>(context));
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            ViewBag.ImageUrl = Image.FileName;
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, true, shouldLockout: false);
+
+            if (result == SignInStatus.Success)
+            {
+                model.ImageUrl = Image.FileName;
+               
+                user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Country = model.Country;
+                user.BirthDate = model.BirthDate;
+                user.JoinDate = DateTime.Now;
+                user.ImageUrl = model.ImageUrl;
+                user.EmailLinkDate = DateTime.Now;
+                user.LAstLoginDate = DateTime.Now;
+
+                var result1 = await UserManager.UpdateSecurityStampAsync(user.Id);
+             
+               
+                var path = Path.Combine(Server.MapPath("~/Content/Upload/"), Image.FileName);
+                Image.SaveAs(path);
+                return View(model);
+                //return Login(returnUrl);
+                //return RedirectToAction("Index", "Home");
+                //return View("index");
+            }
+            else
+                return View();
+            }
+            //switch (result)
+            //{
+
+
+            //    case SignInStatus.Success:
+            //        {
+            //            user.UserName = model.uvm.Email;
+            //            user.Email = model.uvm.Email;
+            //            user.FirstName = model.uvm.FirstName;
+            //            user.LastName = model.uvm.LastName;
+            //            user.Country = model.uvm.Country;
+            //            user.BirthDate = model.uvm.BirthDate;
+            //            user.JoinDate = DateTime.Now;
+
+            //            user.EmailLinkDate = DateTime.Now;
+            //            user.LAstLoginDate = DateTime.Now;
+
+            //            var result1 = await UserManager.UpdateSecurityStampAsync(user.Id);
+            //            if (result1.Succeeded)
+            //            {
+
+            //                return RedirectToAction("Index", "Home");
+            //            }
+            //        AddErrors(result1);
+
+            //        return RedirectToLocal(returnUrl);
+
+            //        ///return View("index");
+
+           
+
+
+
+     
+    
+
+
+        [HttpPost]
+        [AllowAnonymous]
+
+        public async Task<ActionResult> Desactiver(LoginViewModel model, HttpPostedFileBase Image, string returnUrl)
+        {
+            var UserManager = new UserManager<User>(new UserStore<User>(context));
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
+            if (result == SignInStatus.Success)
+            {
+                user.UserName = model.uvm.Email;
+                user.Email = model.uvm.Email;
+                user.FirstName = model.uvm.FirstName;
+                user.LastName = model.uvm.LastName;
+                user.Country = model.uvm.Country;
+                user.BirthDate = model.uvm.BirthDate;
+                user.JoinDate = DateTime.Now;
+
+                user.EmailLinkDate = DateTime.Now;
+                user.LAstLoginDate = DateTime.Now;
+
+                var result1 = await UserManager.UpdateSecurityStampAsync(user.Id);
+                if (result1.Succeeded)
+                {
+                    return RedirectToLocal(returnUrl);
+              
+                }
+                AddErrors(result1);
+
+                return Login(returnUrl);
+           
+            }
+            else
+                return View();
+          
+
+        }
+
+
+
+
+        // GET: Account/Edit
+        [AllowAnonymous]
+        public ActionResult test()
+        {
+            return View();
+        }
+        public ActionResult nour()
+        {
+            return View();
+        }
     }
-}
+    }

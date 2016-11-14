@@ -1,0 +1,86 @@
+﻿@model IEnumerable<IdentitySample.Models.RegisterViewModel>
+@{
+   
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Model != null)
+{
+    @*foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+          
+
+            
+        </tr>
+    }*@
+
+
+
+
+    <h3>Sellers : @ViewBag.nbrSellerSuivre </h3>
+                <div class="page_content_offset">
+
+
+                    @*<div class="row clearfix m_bottom_45 m_sm_bottom_35">*@
+
+
+                        <div class="row clearfix m_bottom_45 m_sm_bottom_35" style="margin-left: 400px; ">
+
+                            <!--testimonials-->
+                            @*<div class="col-lg-6 col-md-6 col-sm-12 ti_animate animate_ftr animate_horizontal_finished">*@
+                              
+                                
+                                  <div class="clearfix m_bottom_25 m_sm_bottom_20">
+                                    <h2 class="tt_uppercase color_dark f_left f_mxs_none m_mxs_bottom_15">What Our Sellers Say</h2>
+                                    @*<div class="f_right clearfix nav_buttons_wrap f_mxs_none">
+                                        <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left tr_delay_hover r_corners ti_prev"><i class="fa fa-angle-left"></i></button>
+                                        <button class="button_type_7 bg_cs_hover box_s_none f_size_ex_large bg_light_color_1 f_left m_left_5 tr_delay_hover r_corners ti_next"><i class="fa fa-angle-right"></i></button>
+                                    </div>*@
+                                </div>
+                                <!--testimonials carousel-->
+                                @*<div class="testiomials_carousel owl-carousel owl-theme" style="display: block; opacity: 1;">*@
+                                    @*<div  style="height: 192px;">*@
+                                    @*<div class="owl-wrapper" style="width: 330px; left: 0px; display: block;">*@
+
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <div class="owl-item" style="width: 555px;">
+
+                                            <blockquote class="r_corners shadow f_size_large relative m_bottom_15 animate_ftr animate_horizontal_finished">@Html.DisplayFor(model => item.PersonnalDescription)</blockquote>
+                                            <img class="circle m_left_20 d_inline_middle animate_ftr animate_horizontal_finished" src="/Content/images/testimonial_img_1.jpg" alt="">
+                                            <div class="d_inline_middle m_left_15 animate_ftr animate_horizontal_finished">
+                                                <h5 class="color_dark"><b>@Html.DisplayFor(model => item.Email)</b></h5>
+                                                <p>@Html.DisplayFor(model => item.Country)</p>
+                                            </div>
+
+                                        </div>
+                                    }
+
+
+                                    @*</div>*@
+                                    @*</div>*@
+
+
+                                    <div class="owl-controls clickable">
+                                <div class="owl-pagination"><div class="owl-page active">
+                                    <span class=""></span></div><div class="owl-page"><span class=""></span></div><div class="owl-page"><span class=""></span></div></div></div>
+                                @*</div>*@
+                           
+                            
+                             @*</div>*@
+
+
+                        </div>
+                    
+                        
+                        @*</div>*@
+
+                </div>
+
+}
+
+
